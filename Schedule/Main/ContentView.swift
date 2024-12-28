@@ -12,7 +12,7 @@ import OpenAPIURLSession
 struct ContentView: View {
     let items = Array(1...20).map { "Story \($0)" }
     @State private var stations: [Components.Schemas.Station] = []
-    @State private var trips: Components.Schemas.Trips?
+    @State private var copyRight: Components.Schemas.Copyright?
     
     @State private var errorMessage: String? = nil
     @State private var text1: String = ""
@@ -84,6 +84,7 @@ struct ContentView: View {
                     }
                 }) {
                     Text("Ближайшие станции")
+                        .frame(maxWidth: .infinity)
                         .font(.system(size: 16, weight: .bold))
                         .foregroundColor(.white)
                         .padding()
@@ -92,10 +93,11 @@ struct ContentView: View {
                 .cornerRadius(10) // Закругление углов кнопки
                 Button(action: {
                     Task {
-                        await searchTrips() 
+                        await testSatlements()
                     }
                 }) {
-                    Text("Поиск рейсов")
+                    Text("Nearest Setlement")
+                        .frame(maxWidth: .infinity)
                         .font(.system(size: 16, weight: .bold))
                         .foregroundColor(.white)
                         .padding()
@@ -106,10 +108,11 @@ struct ContentView: View {
             HStack {
                 Button(action: {
                     Task {
-                        await fetchNearestStations()
+                        await testCopyright()
                     }
                 }) {
-                    Text("Ближайшие станции")
+                    Text("Тест Copy Right")
+                        .frame(maxWidth: .infinity)
                         .font(.system(size: 16, weight: .bold))
                         .foregroundColor(.white)
                         .padding()
@@ -118,10 +121,67 @@ struct ContentView: View {
                 .cornerRadius(10) // Закругление углов кнопки
                 Button(action: {
                     Task {
-                        await searchTrips() 
+                        await testCarriers()
                     }
                 }) {
-                    Text("Поиск рейсов")
+                    Text("Тест Carriers")
+                        .frame(maxWidth: .infinity)
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.white)
+                        .padding()
+                }
+                .background(Color.blue) // Цвет фона кнопки
+                .cornerRadius(10) // Закругление углов кнопки
+            }            
+            HStack {
+                Button(action: {
+                    Task {
+                        await getTickets()
+                    }
+                }) {
+                    Text("Тест Search")
+                        .frame(maxWidth: .infinity)
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.white)
+                        .padding()
+                }
+                .background(Color.blue) // Цвет фона кнопки
+                .cornerRadius(10) // Закругление углов кнопки
+                Button(action: {
+                    Task {
+                        await getSchedule()
+                    }
+                }) {
+                    Text("Тест Schedule")
+                        .frame(maxWidth: .infinity)
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.white)
+                        .padding()
+                }
+                .background(Color.blue) // Цвет фона кнопки
+                .cornerRadius(10) // Закругление углов кнопки
+            }            
+            HStack {
+                Button(action: {
+                    Task {
+                        await getThread()
+                    }
+                }) {
+                    Text("Тест Thead")
+                        .frame(maxWidth: .infinity)
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.white)
+                        .padding()
+                }
+                .background(Color.blue) // Цвет фона кнопки
+                .cornerRadius(10) // Закругление углов кнопки
+                Button(action: {
+                    Task {
+                        await getStationList()
+                    }
+                }) {
+                    Text("Тест Station List")
+                        .frame(maxWidth: .infinity)
                         .font(.system(size: 16, weight: .bold))
                         .foregroundColor(.white)
                         .padding()
@@ -153,32 +213,96 @@ struct ContentView: View {
             }
         }
     }
-    
-    func searchTrips() async {
-        let from: String = "c213"
-        let to: String = "c146"
-        errorMessage = nil
-        Task {
-            trips = try await service.searchTrips(from: from, to: to)
-            print(trips ?? "Пусто")
-        }
-    }
-    
-    func testCopyRight() async {
-        let from: String = "c213"
-        let to: String = "c146"
-        errorMessage = nil
-        Task {
-            trips = try await service.searchTrips(from: from, to: to)
-            print(trips ?? "Пусто")
-        }
-    }
-    
+
     func testCopyright() async {
-        let format = "json"
-        Task {
-            trips = try await service.searchTrips(from: from, to: to)
-            print(trips ?? "Пусто")
+        do {
+            let result = try await service.getCopyright(format: .json)
+            DispatchQueue.main.async {
+                self.copyRight = result
+            }
+        } catch {
+            DispatchQueue.main.async {
+                self.errorMessage = "Ошибка: \(error.localizedDescription)"
+            }
+        }
+    }
+    
+    func testCarriers() async {
+        do {
+            let _ = try await service.testCarriers(code: "680")
+            DispatchQueue.main.async {
+            }
+        } catch {
+            DispatchQueue.main.async {
+                self.errorMessage = "Ошибка: \(error.localizedDescription)"
+            }
+        }
+    }    
+    
+    func testSatlements() async {
+        do {
+            let _ = try await service.getNearestSettlement(lat: 59.864177, lng: 30.319163)
+            DispatchQueue.main.async {
+            }
+        } catch {
+            DispatchQueue.main.async {
+                self.errorMessage = "Ошибка: \(error.localizedDescription)"
+            }
+        }
+    }    
+    
+    func getThread() async {
+        print("Тестируем тред")
+        do {
+            let _ = try await service.getThread(uid: "098S_0_2")
+            DispatchQueue.main.async {
+            }
+        } catch {
+            DispatchQueue.main.async {
+                self.errorMessage = "Ошибка: \(error.localizedDescription)"
+            }
+        }
+    }    
+    
+    func getTickets() async {
+        print("Тестируем тред")
+        do {
+            let _ = try await service.ticketsSearch(
+                from: "c146",
+                to: "c213"
+            )
+            DispatchQueue.main.async {
+            }
+        } catch {
+            DispatchQueue.main.async {
+                self.errorMessage = "Ошибка: \(error.localizedDescription)"
+            }
+        }
+    }    
+    
+    func getStationList() async {
+        print("Тестируем station list")
+        do {
+            let _ = try await service.getStationList()
+            DispatchQueue.main.async {
+            }
+        } catch {
+            DispatchQueue.main.async {
+                self.errorMessage = "Ошибка: \(error.localizedDescription)"
+            }
+        }
+    }    
+    
+    func getSchedule() async {
+        print("Тестируем schedule")
+        do {
+            let _ = try await service.getSchedules(station: "s9600213")
+            DispatchQueue.main.async {
+            }
+        } catch {
+            DispatchQueue.main.async {
+                self.errorMessage = "Ошибка: \(error.localizedDescription)"
+            }
         }
     }
 
