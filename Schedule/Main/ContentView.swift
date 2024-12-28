@@ -10,7 +10,7 @@ import OpenAPIRuntime
 import OpenAPIURLSession
 
 struct ContentView: View {
-    let items = Array(1...20).map { "Story \($0)" }
+    private let items = Array(1...20).map { "Story \($0)" }
     @State private var stations: [Components.Schemas.Station] = []
     @State private var copyRight: Components.Schemas.Copyright?
     
@@ -18,8 +18,8 @@ struct ContentView: View {
     @State private var text1: String = ""
     @State private var text2: String = ""
     
-    let client = Client(serverURL: try! Servers.Server1.url(), transport: URLSessionTransport())
-    let service: NetworkServiceProtocol
+    private let client = Client(serverURL: try! Servers.Server1.url(), transport: URLSessionTransport())
+    private let service: NetworkServiceProtocol
     
     
     init() {
@@ -197,7 +197,7 @@ struct ContentView: View {
         .padding(.horizontal, 16)
     }
     
-    func fetchNearestStations() async {
+    private func fetchNearestStations() async {
         let lat: Double = 59.864177
         let lng: Double = 30.319163
         let distance: Int = 50
@@ -214,7 +214,7 @@ struct ContentView: View {
         }
     }
 
-    func testCopyright() async {
+    private func testCopyright() async {
         do {
             let result = try await service.getCopyright(format: .json)
             DispatchQueue.main.async {
@@ -227,7 +227,7 @@ struct ContentView: View {
         }
     }
     
-    func testCarriers() async {
+    private func testCarriers() async {
         do {
             let _ = try await service.testCarriers(code: "680")
             DispatchQueue.main.async {
@@ -239,7 +239,7 @@ struct ContentView: View {
         }
     }    
     
-    func testSatlements() async {
+    private func testSatlements() async {
         do {
             let _ = try await service.getNearestSettlement(lat: 59.864177, lng: 30.319163)
             DispatchQueue.main.async {
@@ -251,7 +251,7 @@ struct ContentView: View {
         }
     }    
     
-    func getThread() async {
+    private func getThread() async {
         print("Тестируем тред")
         do {
             let _ = try await service.getThread(uid: "098S_0_2")
@@ -264,7 +264,7 @@ struct ContentView: View {
         }
     }    
     
-    func getTickets() async {
+    private func getTickets() async {
         print("Тестируем тред")
         do {
             let _ = try await service.ticketsSearch(
@@ -280,7 +280,7 @@ struct ContentView: View {
         }
     }    
     
-    func getStationList() async {
+    private func getStationList() async {
         print("Тестируем station list")
         do {
             let _ = try await service.getStationList()
@@ -293,7 +293,7 @@ struct ContentView: View {
         }
     }    
     
-    func getSchedule() async {
+    private func getSchedule() async {
         print("Тестируем schedule")
         do {
             let _ = try await service.getSchedules(station: "s9600213")
