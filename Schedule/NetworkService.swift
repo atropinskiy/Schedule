@@ -127,33 +127,33 @@ final class NetworkService: NetworkServiceProtocol {
         case json = "json"
         case xml = "xml"
     }
-  
+    
     func getStationsList() async throws -> String {
         print("Начинаем тестирование")
-
+        
         do {
             // Отправка запроса на сервер с указанием формата XML
             let response = try await client.getStationsList(query: .init(apikey: apikey, format: "xml"))
-
+            
             print("Ответ сервера: \(response)")
-
+            
             // Попытка извлечь тело ответа
             let body = try response.ok.body
-
+            
             // Используем потоковое чтение для больших данных
             var resultString = ""
-
+            
             // Прочитаем данные из тела
             if case .html(let bodyHTML) = body {
                 // Поток данных
                 let bodyStream = bodyHTML
-
+                
                 // Чтение данных по частям
                 do {
                     for try await chunk in bodyStream {  // Здесь добавляем try перед for-await, так как это может выбросить ошибку
                         // Преобразуем ArraySlice<UInt8> в Data
                         let chunkData = Data(chunk)
-
+                        
                         // Попробуем преобразовать данные в строку в разных кодировках
                         if let chunkString = String(data: chunkData, encoding: .utf8) {
                             resultString += chunkString
@@ -170,7 +170,7 @@ final class NetworkService: NetworkServiceProtocol {
                     print("Ошибка при чтении потока данных: \(error)")
                     throw error
                 }
-
+                
                 // Возвращаем всю строку после обработки всех частей
                 print("Тело ответа (XML): \(resultString)")
                 return resultString
@@ -183,7 +183,7 @@ final class NetworkService: NetworkServiceProtocol {
             throw error
         }
     }
-   
+    
     func getSchedules(station: String) async throws -> Schedules {
         print("Начинаем тестирование")
         do {

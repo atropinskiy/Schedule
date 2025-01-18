@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct TabBarView: View {
-    @State private var selectedTab = 0
+    @State private var selectedTabIndex = 0
 
     var body: some View {
-        TabView(selection: $selectedTab) {
+        TabView(selection: $selectedTabIndex) {
             ContentView()
                 .tabItem {
                     Image("scheduleTab")
                     .renderingMode(.template)
-                    .foregroundColor(selectedTab == 0 ? .black : .gray)
+                    .foregroundColor(selectedTabIndex == 0 ? .black : .gray)
                 }
                 .tag(0)
                 
@@ -24,7 +24,7 @@ struct TabBarView: View {
                 .tabItem {
                     Image("settingsTab")
                     .renderingMode(.template)
-                    .foregroundColor(selectedTab == 1 ? .black : .gray)
+                    .foregroundColor(selectedTabIndex == 1 ? .black : .gray)
                 }
                 .tag(1)
         }
