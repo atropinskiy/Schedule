@@ -1,6 +1,5 @@
 //
-//  ViewController.swift
-//  Schedule
+//  ContentView.swift
 //
 //  Created by alex_tr on 27.12.2024.
 //
@@ -14,17 +13,26 @@ struct ContentView: View {
     @State private var stations: [Components.Schemas.Station] = []
     @State private var copyRight: Components.Schemas.Copyright?
     
-    @State private var errorMessage: String? = nil
+    @State private var errorMessage: String?
     @State private var text1: String = ""
     @State private var text2: String = ""
     
-    private let client = Client(serverURL: try! Servers.Server1.url(), transport: URLSessionTransport())
+    private let client: Client
     private let service: NetworkServiceProtocol
     
-    
     init() {
-        // Инициализация сервиса
-        self.service = NetworkService(client: client, apikey: Constants.token)
+        do {
+            let url = try Servers.Server1.url()
+            client = Client(serverURL: url, transport: URLSessionTransport())
+            
+            let configuration = URLSessionConfiguration.default
+            configuration.timeoutIntervalForRequest = 0
+            configuration.timeoutIntervalForResource = 0
+            
+            self.service = NetworkService(client: client, apikey: Constants.token)
+        } catch {
+            fatalError("Не удалось получить URL для сервера: \(error.localizedDescription)")
+        }
     }
     
     var body: some View {
@@ -38,10 +46,10 @@ struct ContentView: View {
                 
             }
             .frame(height: 188)
-            .padding(.vertical, 24) // Отступ сверху
+            .padding(.vertical, 24)
             
             ZStack {
-                HStack(spacing: 16) { // Убираем отступы между элементами
+                HStack(spacing: 16) {
                     VStack(spacing: 0) {
                         TextField("Откуда", text: $text1)
                             .frame(height: 48)
@@ -52,7 +60,7 @@ struct ContentView: View {
                             .padding(.horizontal, 16)
                         
                     }
-                    .frame(height: 96) // Сохраняем высоту для List
+                    .frame(height: 96)
                     .padding(.vertical, 0)
                     .background(Color(.white))
                     .cornerRadius(20)
@@ -89,8 +97,8 @@ struct ContentView: View {
                         .foregroundColor(.white)
                         .padding()
                 }
-                .background(Color.blue) // Цвет фона кнопки
-                .cornerRadius(10) // Закругление углов кнопки
+                .background(Color.blue)
+                .cornerRadius(10)
                 Button(action: {
                     Task {
                         await testSatlements()
@@ -102,9 +110,9 @@ struct ContentView: View {
                         .foregroundColor(.white)
                         .padding()
                 }
-                .background(Color.blue) // Цвет фона кнопки
-                .cornerRadius(10) // Закругление углов кнопки
-            }            
+                .background(Color.blue)
+                .cornerRadius(10)
+            }
             HStack {
                 Button(action: {
                     Task {
@@ -117,8 +125,8 @@ struct ContentView: View {
                         .foregroundColor(.white)
                         .padding()
                 }
-                .background(Color.blue) // Цвет фона кнопки
-                .cornerRadius(10) // Закругление углов кнопки
+                .background(Color.blue)
+                .cornerRadius(10)
                 Button(action: {
                     Task {
                         await testCarriers()
@@ -130,9 +138,9 @@ struct ContentView: View {
                         .foregroundColor(.white)
                         .padding()
                 }
-                .background(Color.blue) // Цвет фона кнопки
-                .cornerRadius(10) // Закругление углов кнопки
-            }            
+                .background(Color.blue)
+                .cornerRadius(10)
+            }
             HStack {
                 Button(action: {
                     Task {
@@ -145,8 +153,8 @@ struct ContentView: View {
                         .foregroundColor(.white)
                         .padding()
                 }
-                .background(Color.blue) // Цвет фона кнопки
-                .cornerRadius(10) // Закругление углов кнопки
+                .background(Color.blue)
+                .cornerRadius(10)
                 Button(action: {
                     Task {
                         await getSchedule()
@@ -158,9 +166,9 @@ struct ContentView: View {
                         .foregroundColor(.white)
                         .padding()
                 }
-                .background(Color.blue) // Цвет фона кнопки
-                .cornerRadius(10) // Закругление углов кнопки
-            }            
+                .background(Color.blue)
+                .cornerRadius(10)
+            }
             HStack {
                 Button(action: {
                     Task {
@@ -173,8 +181,8 @@ struct ContentView: View {
                         .foregroundColor(.white)
                         .padding()
                 }
-                .background(Color.blue) // Цвет фона кнопки
-                .cornerRadius(10) // Закругление углов кнопки
+                .background(Color.blue)
+                .cornerRadius(10)
                 Button(action: {
                     Task {
                         await getStationList()
@@ -186,8 +194,8 @@ struct ContentView: View {
                         .foregroundColor(.white)
                         .padding()
                 }
-                .background(Color.blue) // Цвет фона кнопки
-                .cornerRadius(10) // Закругление углов кнопки
+                .background(Color.blue)
+                .cornerRadius(10)
             }
             
             
@@ -213,7 +221,7 @@ struct ContentView: View {
             }
         }
     }
-
+    
     private func testCopyright() async {
         do {
             let result = try await service.getCopyright(format: .json)
@@ -226,7 +234,6 @@ struct ContentView: View {
             }
         }
     }
-    
     private func testCarriers() async {
         do {
             let _ = try await service.testCarriers(code: "680")
@@ -237,8 +244,7 @@ struct ContentView: View {
                 self.errorMessage = "Ошибка: \(error.localizedDescription)"
             }
         }
-    }    
-    
+    }
     private func testSatlements() async {
         do {
             let _ = try await service.getNearestSettlement(lat: 59.864177, lng: 30.319163)
@@ -249,7 +255,7 @@ struct ContentView: View {
                 self.errorMessage = "Ошибка: \(error.localizedDescription)"
             }
         }
-    }    
+    }
     
     private func getThread() async {
         print("Тестируем тред")
@@ -262,7 +268,7 @@ struct ContentView: View {
                 self.errorMessage = "Ошибка: \(error.localizedDescription)"
             }
         }
-    }    
+    }
     
     private func getTickets() async {
         print("Тестируем тред")
@@ -278,12 +284,12 @@ struct ContentView: View {
                 self.errorMessage = "Ошибка: \(error.localizedDescription)"
             }
         }
-    }    
+    }
     
     private func getStationList() async {
         print("Тестируем station list")
         do {
-            let _ = try await service.getStationList()
+            let _ = try await service.getStationsList()
             DispatchQueue.main.async {
             }
         } catch {
@@ -291,7 +297,7 @@ struct ContentView: View {
                 self.errorMessage = "Ошибка: \(error.localizedDescription)"
             }
         }
-    }    
+    }
     
     private func getSchedule() async {
         print("Тестируем schedule")
@@ -305,7 +311,7 @@ struct ContentView: View {
             }
         }
     }
-
+    
     
 }
 

@@ -19,7 +19,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let window = UIWindow(windowScene: windowScene)
             let tabBarView = TabBarView()
 
-            // Создаем UIHostingController с TabBarView
             window.rootViewController = UIHostingController(rootView: tabBarView)
             self.window = window
             window.makeKeyAndVisible()

@@ -203,16 +203,16 @@ paths:
         - name: format
           in: query
           description: Формат
-          required: true
+          required: false
           schema:
             type: string
       responses:
         "200":
           description: Успешный ответ с рейсами
           content:
-            application/json:
+            text/html:
               schema:
-                $ref: '#/components/schemas/CountriesList'
+                type: string
         "400":
           description: Ошибка запроса
         "404":
@@ -548,7 +548,28 @@ components:
         stations:
           type: array
           items:
-            $ref: '#/components/schemas/Station'
+            $ref: '#/components/schemas/Stations_for_station_list'
+            
+    Stations_for_station_list:
+      type: object
+      properties:
+        direction:
+          type: string
+        codes:
+          type: object
+        station_type:
+          type: string
+        title:
+          type: string
+        longitude:
+          type: number
+        transport_type:
+          type: string
+        latitude:
+          type: number
+    
+    
+    
     
     Carrier:
       type: object
@@ -623,6 +644,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Settlements'
+            
+            
     CountriesList:
       type: object
       properties:
