@@ -33,7 +33,6 @@ struct ContentView: View {
             fatalError("Не удалось получить URL для сервера: \(error.localizedDescription)")
         }
     }
-    
     var body: some View {
         NavigationStack {
             VStack(spacing: 12) {
@@ -42,9 +41,9 @@ struct ContentView: View {
                     LazyHStack(spacing: 12) {
                         ForEach(viewModel.story) { story in
                             Image(story.name)
-                                .resizable() // Разрешаем изменение размера изображения
-                                .scaledToFit() // Сохраняем соотношение сторон
-                                .frame(height: 140) // Задаем фиксированную высоту
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 140)
                         }
                     }
                 }
@@ -130,6 +129,7 @@ struct ContentView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .padding(.horizontal, 16)
+            
         }
     }
 }

@@ -14,7 +14,6 @@ struct CarrierCard: View {
         self.cardCarrier = cardCarrier
     }
     var body: some View {
-        
             VStack (spacing: 4) {
                 ZStack {
                     HStack (spacing: 8) {
@@ -60,9 +59,11 @@ struct CarrierCard: View {
             .frame(height: 104)
             .background(Color("AT-lightGray"))
             .cornerRadius(24)
-
-        }
-        
+            .zIndex(2)
+            .contentShape(Rectangle())
+    }
+    
+    
 }
 
 #Preview {

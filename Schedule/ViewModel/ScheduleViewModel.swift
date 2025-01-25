@@ -39,12 +39,18 @@ class ScheduleViewModel: ObservableObject {
         
         let carrier1 = CarrierModel(name: "РЖД",transfer: "С пересадкой в Костроме", timeStart: "22:30", timeFinish: "08:15", iconName: "RZD", date: "14 января")
         let carrier2 = CarrierModel(name: "ФГК",transfer: "", timeStart: "01:15", timeFinish: "09:00", iconName: "FGK", date: "15 января")
+        let carrier3 = CarrierModel(name: "ФГК",transfer: "", timeStart: "01:15", timeFinish: "09:00", iconName: "FGK", date: "15 января")
+        let carrier4 = CarrierModel(name: "ФГК",transfer: "", timeStart: "01:15", timeFinish: "09:00", iconName: "FGK", date: "15 января")
+        let carrier5 = CarrierModel(name: "ФГК",transfer: "", timeStart: "01:15", timeFinish: "09:00", iconName: "FGK", date: "15 января")
+        let carrier6 = CarrierModel(name: "ФГК",transfer: "", timeStart: "01:15", timeFinish: "09:00", iconName: "FGK", date: "15 января")
+        let carrier7 = CarrierModel(name: "ФГК",transfer: "", timeStart: "01:15", timeFinish: "09:00", iconName: "FGK", date: "15 января")
+        let carrier8 = CarrierModel(name: "ФГК",transfer: "", timeStart: "01:15", timeFinish: "09:00", iconName: "FGK", date: "15 января")
         
         self.timeSelections = []
         self.story = [story1, story2, story3, story4]
         self.towns = [town1, town2, town3, town4]
         self.stations = [station1, station2, station3, station4]
-        self.carrierList = [carrier1, carrier2, carrier2, carrier2, carrier2, carrier2, carrier2]
+        self.carrierList = [carrier1, carrier2, carrier3, carrier4, carrier5, carrier6, carrier7, carrier8]
     }
     
     func carrierInInterval(carrier: CarrierModel) -> String {
