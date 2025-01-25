@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22404F592D438E720075ADD6 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22404F582D438E720075ADD6 /* SearchBar.swift */; };
+		22404F5C2D43923A0075ADD6 /* DestinationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22404F5B2D43923A0075ADD6 /* DestinationModel.swift */; };
+		22404F602D4396F20075ADD6 /* RowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22404F5F2D4396F20075ADD6 /* RowView.swift */; };
+		22404F6C2D43C0020075ADD6 /* StationSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22404F6B2D43C0020075ADD6 /* StationSelectionView.swift */; };
+		228E3F582D436AD400D0C92A /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228E3F572D436AD400D0C92A /* ScheduleViewModel.swift */; };
+		228E3F5C2D436B4600D0C92A /* ServiceFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228E3F5B2D436B4600D0C92A /* ServiceFunctions.swift */; };
+		228E3F622D43701D00D0C92A /* StoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228E3F612D43701D00D0C92A /* StoryView.swift */; };
+		228E3F652D437AC500D0C92A /* CitySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228E3F642D437AC500D0C92A /* CitySelectionView.swift */; };
 		22C086A12D2030EE001B7E1E /* openapi.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 22C086A02D2030EE001B7E1E /* openapi.yaml */; };
 		22D693FE2D1ECBED00691B46 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D693FD2D1ECBED00691B46 /* AppDelegate.swift */; };
 		22D694002D1ECBED00691B46 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D693FF2D1ECBED00691B46 /* SceneDelegate.swift */; };
@@ -21,9 +29,24 @@
 		22D694312D1F0DAA00691B46 /* OpenAPIURLSession in Frameworks */ = {isa = PBXBuildFile; productRef = 22D694302D1F0DAA00691B46 /* OpenAPIURLSession */; };
 		22D694402D1F156900691B46 /* openapi-generator-config.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 22D6943F2D1F156900691B46 /* openapi-generator-config.yaml */; };
 		22D694432D1F15D900691B46 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D694422D1F15D900691B46 /* NetworkService.swift */; };
+		22E40FD52D44D70F00D97D8F /* CarrierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E40FD42D44D70F00D97D8F /* CarrierView.swift */; };
+		22E40FD82D44DB6500D97D8F /* CarrierCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E40FD72D44DB6500D97D8F /* CarrierCard.swift */; };
+		22E40FDB2D44F38200D97D8F /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E40FDA2D44F38200D97D8F /* FilterView.swift */; };
+		22E40FDE2D44F46200D97D8F /* FilterHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E40FDD2D44F46200D97D8F /* FilterHeader.swift */; };
+		22E40FE62D44FAEF00D97D8F /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E40FE52D44FAEF00D97D8F /* CheckBox.swift */; };
+		22E40FEA2D45036600D97D8F /* Radio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E40FE92D45036600D97D8F /* Radio.swift */; };
+		22E40FED2D451E6700D97D8F /* CarrierDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E40FEC2D451E6700D97D8F /* CarrierDetailsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		22404F582D438E720075ADD6 /* SearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		22404F5B2D43923A0075ADD6 /* DestinationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationModel.swift; sourceTree = "<group>"; };
+		22404F5F2D4396F20075ADD6 /* RowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowView.swift; sourceTree = "<group>"; };
+		22404F6B2D43C0020075ADD6 /* StationSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationSelectionView.swift; sourceTree = "<group>"; };
+		228E3F572D436AD400D0C92A /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
+		228E3F5B2D436B4600D0C92A /* ServiceFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFunctions.swift; sourceTree = "<group>"; };
+		228E3F612D43701D00D0C92A /* StoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryView.swift; sourceTree = "<group>"; };
+		228E3F642D437AC500D0C92A /* CitySelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySelectionView.swift; sourceTree = "<group>"; };
 		22C086A02D2030EE001B7E1E /* openapi.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = openapi.yaml; sourceTree = SOURCE_ROOT; };
 		22D693FA2D1ECBED00691B46 /* Schedule.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Schedule.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22D693FD2D1ECBED00691B46 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -38,6 +61,13 @@
 		22D694162D1EFFA300691B46 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		22D6943F2D1F156900691B46 /* openapi-generator-config.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = "openapi-generator-config.yaml"; sourceTree = "<group>"; };
 		22D694422D1F15D900691B46 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		22E40FD42D44D70F00D97D8F /* CarrierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarrierView.swift; sourceTree = "<group>"; };
+		22E40FD72D44DB6500D97D8F /* CarrierCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarrierCard.swift; sourceTree = "<group>"; };
+		22E40FDA2D44F38200D97D8F /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
+		22E40FDD2D44F46200D97D8F /* FilterHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterHeader.swift; sourceTree = "<group>"; };
+		22E40FE52D44FAEF00D97D8F /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
+		22E40FE92D45036600D97D8F /* Radio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radio.swift; sourceTree = "<group>"; };
+		22E40FEC2D451E6700D97D8F /* CarrierDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarrierDetailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +83,47 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		22404F542D438E0B0075ADD6 /* SelectDestination */ = {
+			isa = PBXGroup;
+			children = (
+				228E3F642D437AC500D0C92A /* CitySelectionView.swift */,
+				22404F6B2D43C0020075ADD6 /* StationSelectionView.swift */,
+				22404F5F2D4396F20075ADD6 /* RowView.swift */,
+				22404F582D438E720075ADD6 /* SearchBar.swift */,
+			);
+			path = SelectDestination;
+			sourceTree = "<group>";
+		};
+		228E3F532D436A2D00D0C92A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				22E40FD12D44D6DA00D97D8F /* CarrierSelection */,
+				22404F542D438E0B0075ADD6 /* SelectDestination */,
+				22D694012D1ECBED00691B46 /* ContentView.swift */,
+				228E3F612D43701D00D0C92A /* StoryView.swift */,
+				228E3F5B2D436B4600D0C92A /* ServiceFunctions.swift */,
+				22D694142D1EEFFB00691B46 /* TabBarView.swift */,
+				22D694122D1ED48A00691B46 /* StoryCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		228E3F552D436A6900D0C92A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				22404F5B2D43923A0075ADD6 /* DestinationModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		228E3F562D436A7000D0C92A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				228E3F572D436AD400D0C92A /* ScheduleViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		22D693F12D1ECBED00691B46 = {
 			isa = PBXGroup;
 			children = (
@@ -73,6 +144,9 @@
 		22D693FC2D1ECBED00691B46 /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
+				228E3F562D436A7000D0C92A /* ViewModel */,
+				228E3F552D436A6900D0C92A /* Model */,
+				228E3F532D436A2D00D0C92A /* View */,
 				22C086A02D2030EE001B7E1E /* openapi.yaml */,
 				22D6943F2D1F156900691B46 /* openapi-generator-config.yaml */,
 				22D694112D1ECFA200691B46 /* Main */,
@@ -91,9 +165,6 @@
 		22D694112D1ECFA200691B46 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				22D694012D1ECBED00691B46 /* ContentView.swift */,
-				22D694142D1EEFFB00691B46 /* TabBarView.swift */,
-				22D694122D1ED48A00691B46 /* StoryCell.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -103,6 +174,28 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		22E40FD12D44D6DA00D97D8F /* CarrierSelection */ = {
+			isa = PBXGroup;
+			children = (
+				22E40FE02D44FAC200D97D8F /* Filter */,
+				22E40FD42D44D70F00D97D8F /* CarrierView.swift */,
+				22E40FEC2D451E6700D97D8F /* CarrierDetailsView.swift */,
+				22E40FD72D44DB6500D97D8F /* CarrierCard.swift */,
+			);
+			path = CarrierSelection;
+			sourceTree = "<group>";
+		};
+		22E40FE02D44FAC200D97D8F /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				22E40FDD2D44F46200D97D8F /* FilterHeader.swift */,
+				22E40FDA2D44F38200D97D8F /* FilterView.swift */,
+				22E40FE52D44FAEF00D97D8F /* CheckBox.swift */,
+				22E40FE92D45036600D97D8F /* Radio.swift */,
+			);
+			path = Filter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -188,13 +281,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22404F592D438E720075ADD6 /* SearchBar.swift in Sources */,
+				22E40FDE2D44F46200D97D8F /* FilterHeader.swift in Sources */,
+				22E40FE62D44FAEF00D97D8F /* CheckBox.swift in Sources */,
+				22404F602D4396F20075ADD6 /* RowView.swift in Sources */,
+				228E3F622D43701D00D0C92A /* StoryView.swift in Sources */,
 				22D694022D1ECBED00691B46 /* ContentView.swift in Sources */,
+				22E40FDB2D44F38200D97D8F /* FilterView.swift in Sources */,
+				228E3F5C2D436B4600D0C92A /* ServiceFunctions.swift in Sources */,
 				22D693FE2D1ECBED00691B46 /* AppDelegate.swift in Sources */,
 				22D694002D1ECBED00691B46 /* SceneDelegate.swift in Sources */,
+				22404F5C2D43923A0075ADD6 /* DestinationModel.swift in Sources */,
+				22E40FEA2D45036600D97D8F /* Radio.swift in Sources */,
+				22404F6C2D43C0020075ADD6 /* StationSelectionView.swift in Sources */,
+				22E40FED2D451E6700D97D8F /* CarrierDetailsView.swift in Sources */,
+				228E3F582D436AD400D0C92A /* ScheduleViewModel.swift in Sources */,
+				22E40FD82D44DB6500D97D8F /* CarrierCard.swift in Sources */,
 				22D694152D1EEFFB00691B46 /* TabBarView.swift in Sources */,
 				22D694132D1ED48A00691B46 /* StoryCell.swift in Sources */,
 				22D694172D1EFFA300691B46 /* Constants.swift in Sources */,
+				228E3F652D437AC500D0C92A /* CitySelectionView.swift in Sources */,
 				22D694432D1F15D900691B46 /* NetworkService.swift in Sources */,
+				22E40FD52D44D70F00D97D8F /* CarrierView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,7 +469,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -394,7 +502,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
