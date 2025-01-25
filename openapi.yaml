@@ -1,0 +1,829 @@
+openapi: 3.0.3
+info:
+  title: API.Rasp.Yandex.Net
+  description: API Яндекс.Расписаний
+  version: 3.0.0
+servers:
+  - url: https://api.rasp.yandex.net
+tags:
+  - name: Список ближайших станций
+    description: Список ближайших станций
+  - name: Поиск рейсов
+    description: Поиск рейсов между станциями
+paths:
+  /v3.0/nearest_stations/: #Сделано
+    get:
+      tags:
+        - Список ближайших станций
+      summary: Список ближайших станций
+      operationId: getNearestStations
+      parameters:
+        - name: apikey
+          in: query
+          description: API key
+          required: true
+          schema:
+            type: string
+        - name: lat
+          in: query
+          description: широта
+          required: true
+          schema:
+            type: number
+        - name: lng
+          in: query
+          description: долгота
+          required: true
+          schema:
+            type: number
+        - name: distance
+          in: query
+          description: радиус охвата
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stations'
+  /v3.0/carrier/: #Сделано
+    get:
+      tags:
+        - Перевозчики
+      summary: Информация о перевозчике
+      operationId: getCarrier
+      parameters:
+        - name: apikey
+          in: query
+          description: API key
+          required: true
+          schema:
+            type: string
+        - name: code
+          in: query
+          description: Код перевозчика
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Успешный ответ с данными о перевозчике
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Carrier'
+        "400":
+          description: Ошибка запроса
+        "404":
+          description: Перевозчик не найден
+  /v3.0/search/:
+    get:
+      tags:
+        - Поиск рейсов
+      summary: Поиск рейсов между двумя станциями
+      operationId: getTickets
+      parameters:
+        - name: from
+          in: query
+          description: Код станции отправления
+          required: true
+          schema:
+            type: string
+        - name: to
+          in: query
+          description: Код станции прибытия
+          required: true
+          schema:
+            type: string
+        - name: apikey
+          in: query
+          description: API ключ для доступа
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Кол-во данных
+          required: false
+          schema:
+            type: number
+      responses:
+        "200":
+          description: Успешный ответ с рейсами
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketResult'
+        "400":
+          description: Ошибка запроса
+        "404":
+          description: Станции не найдены
+  /v3.0/thread/:
+    get:
+      tags:
+        - Поиск рейсов
+      summary: Поиск рейсов между двумя станциями по UID
+      operationId: getThread
+      parameters:
+        - name: uid
+          in: query
+          description: Идентификатор нитки
+          required: true
+          schema:
+            type: string
+        - name: apikey
+          in: query
+          description: API ключ для доступа
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Успешный ответ с рейсами
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Thread'
+        "400":
+          description: Ошибка запроса
+        "404":
+          description: Станции не найдены
+  /v3.0/nearest_settlement/: #Готово
+    get:
+      tags:
+        - Список ближайших населенных пунктов
+      summary: Список ближайших населенных пунктов
+      operationId: getNearestSettlement
+      parameters:
+        - name: apikey
+          in: query
+          description: API key
+          required: true
+          schema:
+            type: string
+        - name: lat
+          in: query
+          description: Широта точки поиска
+          required: true
+          schema:
+            type: number
+        - name: lng
+          in: query
+          description: Долгота точки поиска
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: Успешный ответ с рейсами
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Settlement'
+        "400":
+          description: Ошибка запроса
+        "404":
+          description: Станции не найдены
+  /v3.0/stations_list/:
+    get:
+      tags:
+        - Список станций
+      summary: Получить список станций
+      operationId: getStationsList
+      parameters:
+        - name: apikey
+          in: query
+          description: API key
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          description: Формат
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Успешный ответ с рейсами
+          content:
+            text/html:
+              schema:
+                type: string
+        "400":
+          description: Ошибка запроса
+        "404":
+          description: Станции не найдены
+  /v3.0/copyright/:
+    get:
+      tags:
+        - Копирайт Яндекс Расписаний
+      summary: Получить список станций
+      operationId: getCopyright
+      parameters:
+        - name: apikey
+          in: query
+          description: API key
+          required: true
+          schema:
+            type: string
+        - name: format
+          in: query
+          description: Формат ответа (JSON или XML)
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Успешный ответ с данными о станциях
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Copyright'
+        "400":
+          description: Ошибка запроса
+        "404":
+          description: Станции не найдены
+  /v3.0/schedule/:
+    get:
+      tags:
+        - Расписание рейсов по станции
+      summary: Запрос позволяет получить список рейсов, отправляющихся от указанной станции и информацию по каждому рейсу.
+      operationId: getSchedule
+      parameters:
+        - name: apikey
+          in: query
+          description: API key
+          required: true
+          schema:
+            type: string
+        - name: station
+          in: query
+          description: Код станции. Должен быть указан в системе кодирования.
+          required: true
+          schema:
+            type: string
+        - name: date
+          in: query
+          description: Код станции. Должен быть указан в системе кодирования.
+          required: true
+          schema:
+            type: string
+            format: date
+          required: false
+      responses:
+        "200":
+          description: Успешный ответ с данными о расписаниях
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedules'
+        "400":
+          description: Ошибка запроса
+        "404":
+          description: Станция не найдена
+
+components:
+  schemas:
+    Stations:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        stations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Station'
+    Pagination:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Общее количество элементов
+        limit:
+          type: integer
+          description: Лимит элементов на странице
+        offset:
+          type: integer
+          description: Смещение для пагинации
+    Station:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Тип станции
+        title:
+          type: string
+          description: Название станции
+        short_title:
+          type: string
+          description: Краткое название станции
+        popular_title:
+          type: string
+          description: Популярное название станции
+        code:
+          type: string
+          description: Код станции
+        lat:
+          type: number
+          description: Широта станции
+        lng:
+          type: number
+          description: Долгота станции
+        station_type:
+          type: string
+          description: Тип станции (например, "ж/д вокзал", "аэропорт")
+        station_type_name:
+          type: string
+          description: Название типа станции
+        transport_type:
+          type: string
+          description: Тип транспорта (например, "поезд", "автобус")
+        distance:
+          type: number
+          description: Расстояние от текущего местоположения (если применимо)
+        majority:
+          type: integer
+          description: Количество пассажиров, обслуживаемых станцией
+        type_choices:
+          $ref: '#/components/schemas/Schedule'
+          description: Расписание, связанное с типом станции
+    Schedule:
+      type: object
+      properties:
+        desktop_url:
+          type: string
+          description: URL для доступа через десктопное приложение
+        touch_url:
+          type: string
+          description: URL для доступа через мобильное приложение
+          
+    TicketResult:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        segments:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntervalSegment'
+            
+    Thread:
+      type: object
+      properties:
+        except_days:
+          type: string
+        arrival_date:
+          type: string
+          nullable: true
+        from:
+          $ref: '#/components/schemas/Station'
+        uid:
+          type: string
+        title:
+          type: string
+        interval:
+          type: object
+          properties:
+            density:
+              type: string
+            end_time:
+              type: string
+            begin_time:
+              type: string
+        departure_date:
+          type: string
+          nullable: true
+        start_time:
+          type: string
+        number:
+          type: string
+        short_title:
+          type: string
+        days:
+          type: string
+        to:
+          $ref: '#/components/schemas/Station'
+        carrier:
+          $ref: '#/components/schemas/Carrier'
+        transport_type:
+          type: string
+        stops:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stop'
+        vehicle:
+          type: string
+          nullable: true
+        start_date:
+          type: string
+        transport_subtype:
+          type: object
+          properties:
+            color:
+              type: string
+            code:
+              type: string
+            title:
+              type: string
+        express_type:
+          type: string
+          nullable: true
+ 
+    Stop:
+      type: object
+      properties:
+        arrival:
+          type: string
+          nullable: true
+        departure:
+          type: string
+          nullable: true
+        terminal:
+          type: string
+          nullable: true
+        platform:
+          type: string
+        station:
+          $ref: '#/components/schemas/Station'
+        stop_time:
+          type: number
+          nullable: true
+        duration:
+          type: number
+    
+    IntervalSegment:
+      type: object
+      properties:
+        from:
+          $ref: '#/components/schemas/Station'
+        thread:
+          $ref: '#/components/schemas/Thread'
+        departure_platform:
+          type: string
+        stops:
+          type: string
+        departure_terminal:
+          type: string
+        to:
+          $ref: '#/components/schemas/Station'
+        has_transfers:
+          type: boolean
+        tickets_info:
+          $ref: '#/components/schemas/TicketsInfo'
+        duration:
+          type: integer
+        arrival_terminal:
+          type: string
+        start_date:
+          type: string
+          format: date
+        arrival_platform:
+          type: string
+
+    TicketsInfo:
+      type: object
+      properties:
+        et_marker:
+          type: boolean
+        places:
+          type: array
+          items:
+            $ref: '#/components/schemas/TicketPlace'
+    TicketPlace:
+      type: object
+      properties:
+        currency:
+          type: string
+        price:
+          $ref: '#/components/schemas/Price'
+        name:
+          type: string
+    Price:
+      type: object
+      properties:
+        cents:
+          type: integer
+        whole:
+          type: integer
+          
+    Settlement:
+      type: object
+      properties:
+        distance:
+          type: number
+          example: 4.981302906703597
+        code:
+          type: string
+          example: "c22512"
+        title:
+          type: string
+          example: "Пронск"
+        popular_title:
+          type: string
+          example: "Пронск"
+        short_title:
+          type: string
+          example: "Пронск"
+        lat:
+          type: number
+          example: 54.106677
+        lng:
+          type: number
+          example: 39.601726
+        type:
+          type: string
+          example: "settlement"
+
+    Settlements:
+      type: object
+      properties:
+        code:
+          type: string
+        title:
+          type: string
+        stations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stations_for_station_list'
+            
+    Stations_for_station_list:
+      type: object
+      properties:
+        direction:
+          type: string
+        codes:
+          type: object
+        station_type:
+          type: string
+        title:
+          type: string
+        longitude:
+          type: number
+        transport_type:
+          type: string
+        latitude:
+          type: number
+    
+    
+    
+    
+    Carrier:
+      type: object
+      properties:
+        carrier:
+          type: object
+          properties:
+            code:
+                type: integer
+                example: 680
+            contacts:
+                type: string
+                example: "Телефон: +7 (1234) 123456"
+            url:
+                type: string
+                example: "http://www.example.com/"
+            title:
+                type: string
+                example: "Россия"
+            phone:
+                type: string
+                example: ""
+            codes:
+              type: object
+              properties:
+                icao:
+                  type: string
+                  nullable: true
+                  example: null
+                sirena:
+                  type: string
+                  nullable: true
+                  example: null
+                iata:
+                  type: string
+                  nullable: true
+                  example: null
+            adress:
+                type: string
+                example: "Санкт-Петербург, ул. Строителей, д. 18"
+            logo:
+                type: string
+                example: "//yastatic.net/rasp/media/data/company/logo/logo_1.jpg"
+            email:
+                type: string
+                example: ""
+    Country:
+      type: object
+      properties:
+        title:
+          type: string
+        codes:
+          type: object
+          properties:
+            yandex_code:
+              type: string
+        regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Region'
+    Region:
+      type: object
+      properties:
+        title:
+          type: string
+        codes:
+          type: object
+          properties:
+            yandex_code:
+              type: string
+        settlements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Settlements'
+            
+            
+    CountriesList:
+      type: object
+      properties:
+        countries:
+          type: array
+          items:
+            $ref: '#/components/schemas/Country'
+            
+    Copyright:
+      type: object
+      properties:
+        copyright:
+          type: object
+          properties:
+            logo_vm:
+              type: string
+              description: Логотип в вертикальном монохромном стиле
+            url:
+              type: string
+              description: Ссылка на источник
+            logo_vd:
+              type: string
+              description: Логотип в вертикальном темном стиле
+            logo_hy:
+              type: string
+              description: Логотип в горизонтальном желтом стиле
+            logo_hd:
+              type: string
+              description: Логотип в горизонтальном темном стиле
+            logo_vy:
+              type: string
+              description: Логотип в вертикальном желтом стиле
+            logo_hm:
+              type: string
+              description: Логотип в горизонтальном монохромном стиле
+            text:
+              type: string
+              description: Текст, поясняющий, что данные предоставлены Яндекс Расписаниями
+    TrainSchedule:
+      type: object
+      properties:
+        uid:
+          type: string
+          description: Unique identifier for the train
+        arrival_date:
+          type: string
+          format: date
+          nullable: true
+        from:
+          type: string
+          nullable: true
+        title:
+          type: string
+        interval:
+          $ref: '#/components/schemas/Interval'
+        departure_date:
+          type: string
+          format: date
+          nullable: true
+        start_time:
+          type: string
+          description: Train start time
+        number:
+          type: string
+          description: Train number
+        short_title:
+          type: string
+        days:
+          type: string
+        to:
+          type: string
+          nullable: true
+        carrier:
+          $ref: '#/components/schemas/Carrier'
+        transport_type:
+          type: string
+        stops:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stop'
+        vehicle:
+          type: string
+          nullable: true
+        start_date:
+          type: string
+          format: date
+        transport_subtype:
+          $ref: '#/components/schemas/TransportSubtype'
+        express_type:
+          type: string
+          nullable: true
+    Interval:
+      type: object
+      properties:
+        density:
+          type: string
+        end_time:
+          type: string
+          format: date-time
+        begin_time:
+          type: string
+          format: date-time
+    
+    TransportSubtype:
+      type: object
+      properties:
+        color:
+          type: string
+        code:
+          type: string
+        title:
+          type: string
+    
+    Schedules:
+      type: object
+      properties:
+        date:
+          type: string
+          nullable: true
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        station:
+          $ref: '#/components/schemas/Station'
+        schedule:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleItem'
+        interval_schedule:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduleItem'
+        schedule_direction:
+          $ref: '#/components/schemas/ScheduleDirection'
+        directions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Direction'
+            
+    ScheduleDirection:
+      type: object
+      properties:
+        code:
+          type: string
+        title:
+          type: string
+
+    Direction:
+      type: object
+      properties:
+        code:
+          type: string
+        title:
+          type: string
+
+    ScheduleItem:
+      type: object
+      properties:
+        except_days:
+          type: string
+        arrival:
+          type: string
+          format: date-time
+        thread:
+          $ref: '#/components/schemas/Thread'
+        is_fuzzy:
+          type: boolean
+        days:
+          type: string
+        stops:
+          type: string
+        departure:
+          type: string
+          format: date-time
+        terminal:
+          type: string
+          nullable: true
+        platform:
+          type: string
+          nullable: true
+
+        
