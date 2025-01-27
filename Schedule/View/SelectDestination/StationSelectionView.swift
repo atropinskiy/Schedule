@@ -26,34 +26,36 @@ struct StationSelectionView: View {
         VStack (spacing: 0) {
             SearchBar(searchText: $searchString)
                 .padding(.bottom, 16)
-            
-            VStack() {
-                ForEach(viewModel.stations, id: \.self) { station in
-                    RowView(destination: station)
-                        .onTapGesture {
-                            if field == "from" {
-                                viewModel.selectedStationFrom = station
-                                viewModel.selectedCityFrom = city
-                            } else {
-                                viewModel.selectedStationTo = station
-                                viewModel.selectedCityTo = city
+            ScrollView {
+                VStack() {
+                    ForEach(viewModel.stations, id: \.self) { station in
+                        RowView(destination: station)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                if field == "from" {
+                                    viewModel.selectedStationFrom = station
+                                    viewModel.selectedCityFrom = city
+                                } else {
+                                    viewModel.selectedStationTo = station
+                                    viewModel.selectedCityTo = city
+                                }
+                                viewModel.removeAll()
                             }
-                            viewModel.removeAll()
-                        }
+                    }
+                    .padding(0)
                 }
-                .padding(0)
-            }
-            .navigationTitle("Выбор станции")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        dismiss()
-                    }) {
-                        Image(systemName: "chevron.backward")
-                            .foregroundColor(.black)
-                            .padding(.horizontal, 0)
+                .navigationTitle("Выбор станции")
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarBackButtonHidden(true)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: {
+                            dismiss()
+                        }) {
+                            Image(systemName: "chevron.backward")
+                                .foregroundColor(.black)
+                                .padding(.horizontal, 0)
+                        }
                     }
                 }
             }

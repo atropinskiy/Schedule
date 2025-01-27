@@ -8,6 +8,7 @@
 import SwiftUI
 struct CitySelectionView: View {
     @ObservedObject var viewModel: ScheduleViewModel
+    @State private var searchString = ""
     @State private var isTabBarHidden: Bool = true
     private var field: String
     @Environment(\.dismiss) var dismiss
@@ -18,6 +19,8 @@ struct CitySelectionView: View {
     }
     
     var body: some View {
+        SearchBar(searchText: $searchString)
+            .padding(.bottom, 16)
         ScrollView {
             VStack {
                 ForEach(viewModel.towns, id: \.self) { city in
@@ -31,6 +34,14 @@ struct CitySelectionView: View {
         .navigationTitle("Выбор города")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            // Скрыть таб-бар при появлении экрана
+            isTabBarHidden = true
+        }
+        .onDisappear {
+            // Показать таб-бар при уходе с экрана
+            isTabBarHidden = false
+        }
         .toolbar(isTabBarHidden ? .hidden : .visible, for: .tabBar)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {

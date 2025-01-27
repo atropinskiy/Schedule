@@ -20,7 +20,7 @@ struct TabBarView: View {
                 }
                 .tag(0)
                 
-            Text("Вторая вкладка")
+            SettingsView()
                 .tabItem {
                     Image("settingsTab")
                     .renderingMode(.template)

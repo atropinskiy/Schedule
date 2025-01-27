@@ -11,6 +11,7 @@ struct CarrierView: View {
     @ObservedObject var viewModel: ScheduleViewModel
     @State private var selectedCarrier: CarrierModel? = nil
     @State private var isTabBarHidden: Bool = true
+    @Environment(\.dismiss) var dismiss
     private var stationFrom: String
     private var stationTo: String
     
@@ -46,22 +47,37 @@ struct CarrierView: View {
                             NavigationLink(destination: CarrierDetailsView(carrier: carrier.name)) {
                                 CarrierCard(cardCarrier: carrier)
                             }
-                            .navigationBarTitleDisplayMode(.inline)
-                            .navigationTitle("")
-                            .tint(.black)
+                            
+                            
                             
                         }
                         .buttonStyle(PlainButtonStyle())
                         .zIndex(0)
                     }
+
                     .padding(.horizontal, 0)
-                    .listRowInsets(EdgeInsets())
                 }
-                
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationTitle("")
+                .tint(.black)
+                .navigationBarBackButtonHidden(true)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: {
+                            dismiss()
+                        }) {
+                            Image(systemName: "chevron.backward")
+                                .foregroundColor(.black)
+                                .padding(.horizontal, 0)
+                        }
+                    }
+                }
+                .scrollIndicators(.hidden)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .padding(.horizontal, 0)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            
             
             VStack {
                 Spacer()
@@ -82,6 +98,7 @@ struct CarrierView: View {
             
         }
         .padding(.horizontal, 16)
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar(isTabBarHidden ? .hidden : .visible, for: .tabBar)
     }
 }

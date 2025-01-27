@@ -15,6 +15,7 @@ struct Destinations: Identifiable, Hashable {
 struct Story: Identifiable, Hashable {
     var id = UUID()
     var name: String
+    var imgName: String
 }
 
 struct CarrierModel: Identifiable, Hashable {

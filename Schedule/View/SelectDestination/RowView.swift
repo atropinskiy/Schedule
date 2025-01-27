@@ -14,6 +14,7 @@ struct RowView: View {
             Text(destination.name)
                 .font(.system(size: 17, weight: .regular))
                 .buttonStyle(PlainButtonStyle())
+                .foregroundColor(.black) 
             Spacer()
             Image("navArrow")
         }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CarrierDetailsView: View {
+    @Environment(\.dismiss) var dismiss
     private var carrier: String
     init(carrier: String) {
         self.carrier = carrier
@@ -24,7 +25,18 @@ struct CarrierDetailsView: View {
             }
             
         }
-        
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    dismiss()
+                }) {
+                    Image(systemName: "chevron.backward")
+                        .foregroundColor(.black)
+                        .padding(.horizontal, 0)
+                }
+            }
+        }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .padding(.horizontal, 16)
         .navigationTitle("Информация о перевозчике")

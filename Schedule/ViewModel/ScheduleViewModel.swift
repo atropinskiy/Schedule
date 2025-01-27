@@ -40,10 +40,9 @@ class ScheduleViewModel: ObservableObject {
     }
     
     init() {
-        let story1 = Story(name: "Story1")
-        let story2 = Story(name: "Story2")
-        let story3 = Story(name: "Story3")
-        let story4 = Story(name: "Story4")
+        let story1 = Story(name: "Story1", imgName: "story1_FS")
+        let story2 = Story(name: "Story2", imgName: "story2_FS")
+        let story3 = Story(name: "Story3", imgName: "story3_FS")
         
         let town1 = Destinations(name: "Москва")
         let town2 = Destinations(name: "Санкт-Петербург")
@@ -65,7 +64,7 @@ class ScheduleViewModel: ObservableObject {
         let carrier8 = CarrierModel(name: "ФГК",transfer: "", timeStart: "01:15", timeFinish: "09:00", iconName: "FGK", date: "15 января")
         
         self.timeSelections = []
-        self.story = [story1, story2, story3, story4]
+        self.story = [story1, story2, story3]
         self.towns = [town1, town2, town3, town4]
         self.stations = [station1, station2, station3, station4]
         self.carrierList = [carrier1, carrier2, carrier3, carrier4, carrier5, carrier6, carrier7, carrier8]

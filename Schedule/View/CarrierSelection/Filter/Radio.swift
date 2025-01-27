@@ -40,7 +40,6 @@ struct Radio: View {
             }
             .onTapGesture {
                 viewModel.transferFlag = flag
-                print(viewModel.transferFlag)
             }
             .padding(0)
         }
