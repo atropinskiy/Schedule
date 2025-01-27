@@ -11,12 +11,10 @@ import OpenAPIURLSession
 struct ContentView: View {
     
     @ObservedObject var viewModel = ScheduleViewModel()
-    @State private var showDetailView = false
     @State private var stations: [Components.Schemas.Station] = []
     @State private var copyRight: Components.Schemas.Copyright?
     @State private var showingStories = false
     @State private var selectedStory: Story? = nil
-    @Environment(\.dismiss) var dismiss
     
     private let client: Client
     private let service: NetworkServiceProtocol
@@ -141,29 +139,34 @@ struct ContentView: View {
                     
                     let finalFrom = "\(viewModel.selectedCityFrom?.name ?? "Город отправления") (\(viewModel.selectedStationFrom?.name ?? "Станция отправления"))"
                     let finalTo = "\(viewModel.selectedCityTo?.name ?? "Город прибытия") (\(viewModel.selectedStationTo?.name ?? "Станция прибытия"))"
-                    NavigationLink(destination: CarrierView(viewModel: viewModel, destinationFrom: finalFrom, destinationTo: finalTo)) {
-                        Text("Найти")
-                            .font(.system(size: 17, weight: .bold))
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(width: 150, height: 60)
-                            .background(Color.blue)
-                            .cornerRadius(16)
+                    
+                    if viewModel.selectedStationTo != nil && viewModel.selectedStationFrom != nil {
+                        NavigationLink(destination: CarrierView(viewModel: viewModel, destinationFrom: finalFrom, destinationTo: finalTo)) {
+                            Text("Найти")
+                                .font(.system(size: 17, weight: .bold))
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(width: 150, height: 60)
+                                .background(Color.blue)
+                                .cornerRadius(16)
+                        }
                     }
                     VStack {
                         NavigationLink(destination: ErrorView(label: "Ошибка сервера", imgName: "error1")) {
                             Text("Пример ошибки 1 ->")
                                 .foregroundColor(.blue)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                         }
                         NavigationLink(destination: ErrorView(label: "Нет интернета", imgName: "error2")) {
                             Text("Пример ошибки 2 ->")
                                 .foregroundColor(.blue)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                         }
                         
                         
 
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
+
                 }
                 Spacer()
             }

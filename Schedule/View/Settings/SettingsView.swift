@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @State private var isDarkMode: Bool = false
-    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var viewModel = ScheduleViewModel()
     
     var body: some View {

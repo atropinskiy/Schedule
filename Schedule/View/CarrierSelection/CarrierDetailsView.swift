@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CarrierDetailsView: View {
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
     private var carrier: String
     init(carrier: String) {
         self.carrier = carrier

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CarrierView: View {
-    @ObservedObject var viewModel: ScheduleViewModel
+    @ObservedObject private var viewModel: ScheduleViewModel
     @State private var selectedCarrier: CarrierModel? = nil
     @State private var isTabBarHidden: Bool = true
     @Environment(\.dismiss) var dismiss

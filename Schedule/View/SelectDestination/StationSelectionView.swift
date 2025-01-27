@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct StationSelectionView: View {
-    @ObservedObject var viewModel: ScheduleViewModel
+    @ObservedObject private var viewModel: ScheduleViewModel
     @State private var searchString = ""
     @State private var isTabBarHidden: Bool = true
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
     private var field: String
     private var city: Destinations
     
@@ -21,15 +21,21 @@ struct StationSelectionView: View {
         self.city = city
     }
     
-    var placeholder = "Введите запрос"
-    
+    private var filteredStations: [Destinations] {
+        if searchString.isEmpty {
+            return viewModel.stations
+        } else {
+            return viewModel.stations.filter { $0.name.localizedCaseInsensitiveContains(searchString) }
+        }
+    }
+
     var body: some View {
         VStack (spacing: 0) {
             SearchBar(searchText: $searchString)
                 .padding(.bottom, 16)
             ScrollView {
                 VStack(spacing:0) {
-                    ForEach(viewModel.stations, id: \.self) { station in
+                    ForEach(filteredStations, id: \.self) { station in
                         RowView(destination: station)
                             .contentShape(Rectangle())
                             .onTapGesture {
@@ -73,7 +79,5 @@ struct StationSelectionView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .padding(.horizontal, 16)
 
-
-        
     }
 }

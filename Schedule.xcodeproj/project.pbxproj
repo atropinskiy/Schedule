@@ -25,7 +25,6 @@
 		22D694052D1ECBED00691B46 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 22D694042D1ECBED00691B46 /* Base */; };
 		22D694072D1ECBEF00691B46 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22D694062D1ECBEF00691B46 /* Assets.xcassets */; };
 		22D6940A2D1ECBEF00691B46 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 22D694092D1ECBEF00691B46 /* Base */; };
-		22D694132D1ED48A00691B46 /* StoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D694122D1ED48A00691B46 /* StoryCell.swift */; };
 		22D694152D1EEFFB00691B46 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D694142D1EEFFB00691B46 /* TabBarView.swift */; };
 		22D694172D1EFFA300691B46 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D694162D1EFFA300691B46 /* Constants.swift */; };
 		22D6942F2D1F0DA500691B46 /* OpenAPIRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 22D6942E2D1F0DA500691B46 /* OpenAPIRuntime */; };
@@ -63,7 +62,6 @@
 		22D694062D1ECBEF00691B46 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		22D694092D1ECBEF00691B46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		22D6940B2D1ECBEF00691B46 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		22D694122D1ED48A00691B46 /* StoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCell.swift; sourceTree = "<group>"; };
 		22D694142D1EEFFB00691B46 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		22D694162D1EFFA300691B46 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		22D6943F2D1F156900691B46 /* openapi-generator-config.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = "openapi-generator-config.yaml"; sourceTree = "<group>"; };
@@ -113,7 +111,6 @@
 				22D694012D1ECBED00691B46 /* ContentView.swift */,
 				228E3F5B2D436B4600D0C92A /* ServiceFunctions.swift */,
 				22D694142D1EEFFB00691B46 /* TabBarView.swift */,
-				22D694122D1ED48A00691B46 /* StoryCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -338,7 +335,6 @@
 				228E3F582D436AD400D0C92A /* ScheduleViewModel.swift in Sources */,
 				22E40FD82D44DB6500D97D8F /* CarrierCard.swift in Sources */,
 				22D694152D1EEFFB00691B46 /* TabBarView.swift in Sources */,
-				22D694132D1ED48A00691B46 /* StoryCell.swift in Sources */,
 				22D694172D1EFFA300691B46 /* Constants.swift in Sources */,
 				228E3F652D437AC500D0C92A /* CitySelectionView.swift in Sources */,
 				22D694432D1F15D900691B46 /* NetworkService.swift in Sources */,

@@ -17,8 +17,6 @@ class ScheduleViewModel: ObservableObject {
     @Published var selectedCityFrom: Destinations?
     @Published var selectedCityTo: Destinations?
     @Published var carrierList: [CarrierModel]
-    @Published var isCitySelected = false
-    @Published var isStationSelected = false
     @Published var timeSelections: [String]
     @Published var transferFlag: Bool?
     @Published var isDarkMode: Bool = false {

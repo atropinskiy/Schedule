@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct TabBarView: View {
-    @StateObject var viewModel = ScheduleViewModel()
+    @StateObject private var viewModel = ScheduleViewModel()
     @State private var selectedTabIndex = 0
-    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         TabView(selection: $selectedTabIndex) {

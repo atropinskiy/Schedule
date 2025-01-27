@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct FilterView: View {
-    @ObservedObject var viewModel: ScheduleViewModel
+    @ObservedObject private var viewModel: ScheduleViewModel
     @State private var isOn = false
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
     init(viewModel: ScheduleViewModel) {
         self.viewModel = viewModel
     }
@@ -39,6 +39,7 @@ struct FilterView: View {
                     .listRowInsets(EdgeInsets())
                     .padding(.horizontal, 0)
                     .lineLimit(2)
+                    .listRowSeparator(.hidden)
                 }
             }
             .listStyle(.plain)
@@ -47,16 +48,16 @@ struct FilterView: View {
                 Button(action: {
                     dismiss()
                 }) {
-                    Text("Применить") // Текст кнопки
-                        .frame(maxWidth: .infinity) // Чтобы кнопка растягивалась по ширине
+                    Text("Применить")
+                        .frame(maxWidth: .infinity)
                         .font(.system(size: 17, weight: .bold))
                         .padding()
-                        .background(Color("AT-blue")) // Цвет фона кнопки
-                        .foregroundColor(.white) // Цвет текста
-                        .cornerRadius(16) // Округление углов кнопки
+                        .background(Color("AT-blue"))
+                        .foregroundColor(.white)
+                        .cornerRadius(16)
                 }
-                .padding(.horizontal, 16) // Отступы от краев экрана
-                .padding(.bottom, 24) // Отступ снизу
+                .padding(.horizontal, 16)
+                .padding(.bottom, 24)
             }
         }
         

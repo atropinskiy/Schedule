@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CheckBox: View {
-    @ObservedObject var viewModel: ScheduleViewModel
+    @ObservedObject private var viewModel: ScheduleViewModel
     @State private var isChecked: Bool
     private var text: String
     init(viewModel: ScheduleViewModel, text: String) {

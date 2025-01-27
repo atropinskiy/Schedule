@@ -7,15 +7,23 @@
 
 import SwiftUI
 struct CitySelectionView: View {
-    @ObservedObject var viewModel: ScheduleViewModel
+    @ObservedObject private var viewModel: ScheduleViewModel
     @State private var searchString = ""
     @State private var isTabBarHidden: Bool = true
     private var field: String
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
     
     init(viewModel: ScheduleViewModel, field: String) {
         self.viewModel = viewModel
         self.field = field
+    }
+    
+    private var filteredTowns: [Destinations] {
+        if searchString.isEmpty {
+            return viewModel.towns
+        } else {
+            return viewModel.towns.filter { $0.name.localizedCaseInsensitiveContains(searchString) }
+        }
     }
     
     var body: some View {
@@ -24,7 +32,7 @@ struct CitySelectionView: View {
                 .padding(.bottom, 16)
             ScrollView {
                 VStack(spacing:0) {
-                    ForEach(viewModel.towns, id: \.self) { city in
+                    ForEach(filteredTowns, id: \.self) { city in
                         NavigationLink(destination: StationSelectionView(viewModel: viewModel, field: field, city: city)) {
                             RowView(destination: city)
                         }
@@ -36,11 +44,9 @@ struct CitySelectionView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
             .onAppear {
-                // Скрыть таб-бар при появлении экрана
                 isTabBarHidden = true
             }
             .onDisappear {
-                // Показать таб-бар при уходе с экрана
                 isTabBarHidden = false
             }
             .toolbar(isTabBarHidden ? .hidden : .visible, for: .tabBar)

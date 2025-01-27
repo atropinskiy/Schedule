@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct StoryViewFullScreen: View {
-    @ObservedObject var viewModel: ScheduleViewModel
-    @Environment(\.presentationMode) var presentationMode
+    @ObservedObject private var viewModel: ScheduleViewModel
+    @Environment(\.presentationMode) private var presentationMode
     private var story: Story
-    
     
     init(viewModel: ScheduleViewModel, story: Story) {
         print("Initializing Story")
