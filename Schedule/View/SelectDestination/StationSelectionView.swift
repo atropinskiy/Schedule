@@ -10,40 +10,57 @@ import SwiftUI
 struct StationSelectionView: View {
     @ObservedObject var viewModel: ScheduleViewModel
     @State private var searchString = ""
-    private var field: String?
     @Environment(\.dismiss) var dismiss
-    @Environment(\.presentationMode) var presentationMode
-       
-    init(viewModel: ScheduleViewModel, field: String) {
+    private var field: String
+    private var city: Destinations
+    
+    init(viewModel: ScheduleViewModel, field: String, city: Destinations) {
         self.viewModel = viewModel
         self.field = field
+        self.city = city
     }
     
     var placeholder = "Введите запрос"
     
     var body: some View {
-        NavigationStack {
-            VStack (spacing: 0) {
-                SearchBar(searchText: $searchString)
-                    .padding(.bottom, 16)
-                
-                List(viewModel.stations, id: \.self) { station in
-                    
+        VStack (spacing: 0) {
+            SearchBar(searchText: $searchString)
+                .padding(.bottom, 16)
+            
+            VStack() {
+                ForEach(viewModel.stations, id: \.self) { station in
                     RowView(destination: station)
-                        .listRowInsets(EdgeInsets())
-                        .background(EmptyView())
                         .onTapGesture {
-                            field == "from" ? (viewModel.selectedStationFrom = station) : (viewModel.selectedStationTo = station)
-                            self.presentationMode.wrappedValue.dismiss()
+                            if field == "from" {
+                                viewModel.selectedStationFrom = station
+                                viewModel.selectedCityFrom = city
+                            } else {
+                                viewModel.selectedStationTo = station
+                                viewModel.selectedCityTo = city
+                            }
+                            viewModel.removeAll()
                         }
                 }
-                .listStyle(.plain)
                 .padding(0)
-                
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .navigationTitle("Выбор станции")
             .navigationBarTitleDisplayMode(.inline)
-            
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Image(systemName: "chevron.backward")
+                            .foregroundColor(.black)
+                            .padding(.horizontal, 0)
+                    }
+                }
+            }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+
+
+        
     }
 }

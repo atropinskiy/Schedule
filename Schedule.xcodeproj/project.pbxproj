@@ -36,6 +36,7 @@
 		22E40FE62D44FAEF00D97D8F /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E40FE52D44FAEF00D97D8F /* CheckBox.swift */; };
 		22E40FEA2D45036600D97D8F /* Radio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E40FE92D45036600D97D8F /* Radio.swift */; };
 		22E40FED2D451E6700D97D8F /* CarrierDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E40FEC2D451E6700D97D8F /* CarrierDetailsView.swift */; };
+		22E40FF62D4620C100D97D8F /* CarrierDetailsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E40FF52D4620C100D97D8F /* CarrierDetailsRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,7 @@
 		22E40FE52D44FAEF00D97D8F /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		22E40FE92D45036600D97D8F /* Radio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radio.swift; sourceTree = "<group>"; };
 		22E40FEC2D451E6700D97D8F /* CarrierDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarrierDetailsView.swift; sourceTree = "<group>"; };
+		22E40FF52D4620C100D97D8F /* CarrierDetailsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarrierDetailsRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 		228E3F532D436A2D00D0C92A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				22E40FF32D456DB100D97D8F /* Stories */,
 				22E40FD12D44D6DA00D97D8F /* CarrierSelection */,
 				22404F542D438E0B0075ADD6 /* SelectDestination */,
 				22D694012D1ECBED00691B46 /* ContentView.swift */,
@@ -182,6 +185,7 @@
 				22E40FE02D44FAC200D97D8F /* Filter */,
 				22E40FD42D44D70F00D97D8F /* CarrierView.swift */,
 				22E40FEC2D451E6700D97D8F /* CarrierDetailsView.swift */,
+				22E40FF52D4620C100D97D8F /* CarrierDetailsRow.swift */,
 				22E40FD72D44DB6500D97D8F /* CarrierCard.swift */,
 			);
 			path = CarrierSelection;
@@ -196,6 +200,13 @@
 				22E40FE92D45036600D97D8F /* Radio.swift */,
 			);
 			path = Filter;
+			sourceTree = "<group>";
+		};
+		22E40FF32D456DB100D97D8F /* Stories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Stories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,6 +302,7 @@
 				228E3F5C2D436B4600D0C92A /* ServiceFunctions.swift in Sources */,
 				22D693FE2D1ECBED00691B46 /* AppDelegate.swift in Sources */,
 				22D694002D1ECBED00691B46 /* SceneDelegate.swift in Sources */,
+				22E40FF62D4620C100D97D8F /* CarrierDetailsRow.swift in Sources */,
 				22404F5C2D43923A0075ADD6 /* DestinationModel.swift in Sources */,
 				22E40FEA2D45036600D97D8F /* Radio.swift in Sources */,
 				22404F6C2D43C0020075ADD6 /* StationSelectionView.swift in Sources */,

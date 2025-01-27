@@ -34,7 +34,7 @@ struct ContentView: View {
         }
     }
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $viewModel.path) {
             VStack(spacing: 12) {
                 // Горизонтальная прокрутка для картинок
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -60,26 +60,33 @@ struct ContentView: View {
                                 let city = viewModel.selectedCityFrom?.name
                                 let station = viewModel.selectedStationFrom?.name
                                 let fromText = (city != nil && station != nil) ? "(\(city ?? "")) \(station ?? "")" : "Откуда"
-                                NavigationLink(destination: CitySelectionView(viewModel: viewModel, field: "from")) {
-                                    Text(fromText)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .frame(height: 48)
-                                        .foregroundColor(.gray)  // Цвет текста на кнопке
-                                        .font(.system(size: 17, weight: .medium))
-                                    
-                                }
-                                let cityTo = viewModel.selectedCityTo?.name
-                                let stationTo = viewModel.selectedStationTo?.name
-                                let fromTextTo = (cityTo != nil && stationTo != nil) ? "(\(cityTo ?? "")) \(stationTo ?? "")" : "Куда"
-                                NavigationLink(destination: CitySelectionView(viewModel: viewModel , field: "to")) {
+                                NavigationLink(value: "from") {
+                                        Text(fromText)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .frame(height: 48)
+                                            .foregroundColor(.gray)  // Цвет текста на кнопке
+                                            .font(.system(size: 17, weight: .medium))
+                                    }
+                                NavigationLink(value: "to") {
+                                    let cityTo = viewModel.selectedCityTo?.name
+                                    let stationTo = viewModel.selectedStationTo?.name
+                                    let fromTextTo = (cityTo != nil && stationTo != nil) ? "(\(cityTo ?? "")) \(stationTo ?? "")" : "Куда"
                                     Text(fromTextTo)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .frame(height: 48)
                                         .foregroundColor(.gray)  // Цвет текста на кнопке
                                         .font(.system(size: 17, weight: .medium))
-                                    
+                                }
+                                
+                            }
+                            .navigationDestination(for: String.self) { value in
+                                if value == "from" {
+                                    CitySelectionView(viewModel: viewModel, field: "from")
+                                } else if value == "to" {
+                                    CitySelectionView(viewModel: viewModel, field: "to")
                                 }
                             }
+                            .navigationTitle("")
                             
                             .frame(height: 98)
                             .frame(maxWidth: .infinity)
@@ -113,8 +120,9 @@ struct ContentView: View {
                     .background(Color.blue)
                     .cornerRadius(20)
                     .padding(.top, 20)
-                    
-                    NavigationLink(destination: CarrierView(viewModel: viewModel)) {
+                    let finalFrom = "\(viewModel.selectedCityFrom?.name ?? "Город отправления") (\(viewModel.selectedStationFrom?.name ?? "Станция отправления")"
+                    let finalTo = "\(viewModel.selectedCityTo?.name ?? "Город прибытия") (\(viewModel.selectedStationTo?.name ?? "Станция прибытия")"
+                    NavigationLink(destination: CarrierView(viewModel: viewModel, destinationFrom: finalFrom, destinationTo: finalTo)) {
                         Text("Найти")
                             .font(.system(size: 17, weight: .bold))
                             .foregroundColor(.white)

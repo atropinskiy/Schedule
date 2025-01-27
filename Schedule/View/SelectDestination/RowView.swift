@@ -15,6 +15,7 @@ struct RowView: View {
                 .font(.system(size: 17, weight: .regular))
                 .buttonStyle(PlainButtonStyle())
             Spacer()
+            Image("navArrow")
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 16)

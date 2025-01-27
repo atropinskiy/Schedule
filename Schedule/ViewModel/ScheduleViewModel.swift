@@ -8,6 +8,7 @@
 import SwiftUI
 
 class ScheduleViewModel: ObservableObject {
+    @Published var path = NavigationPath()
     @Published var story: [Story]
     @Published var towns: [Destinations]
     @Published var stations: [Destinations]
@@ -20,6 +21,23 @@ class ScheduleViewModel: ObservableObject {
     @Published var isStationSelected = false
     @Published var timeSelections: [String]
     @Published var transferFlag: Bool?
+    
+    enum Path: Hashable {
+        case citySelectionView(field: String)
+        case stationSelectionView
+    }
+    
+    func navigate(to destination: Path) {
+        path.append(destination)
+    }
+    
+    func removeAll() {
+        path = NavigationPath()
+    }
+    
+    func goBack() {
+        path.removeLast()
+    }
     
     init() {
         let story1 = Story(name: "Story1")
