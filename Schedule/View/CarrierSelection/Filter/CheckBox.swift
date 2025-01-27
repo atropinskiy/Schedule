@@ -26,7 +26,7 @@ struct CheckBox: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 24, height: 24)
-                .foregroundColor(isChecked ? .black : .gray)
+                .foregroundColor(Color("AT-black-DN"))
                 .onTapGesture {
                     isChecked.toggle()
                     if isChecked {

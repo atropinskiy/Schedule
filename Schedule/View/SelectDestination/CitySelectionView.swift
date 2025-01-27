@@ -19,41 +19,44 @@ struct CitySelectionView: View {
     }
     
     var body: some View {
-        SearchBar(searchText: $searchString)
-            .padding(.bottom, 16)
-        ScrollView {
-            VStack {
-                ForEach(viewModel.towns, id: \.self) { city in
-                    NavigationLink(destination: StationSelectionView(viewModel: viewModel, field: field, city: city)) {
-                        RowView(destination: city)
+        VStack(spacing:0) {
+            SearchBar(searchText: $searchString)
+                .padding(.bottom, 16)
+            ScrollView {
+                VStack(spacing:0) {
+                    ForEach(viewModel.towns, id: \.self) { city in
+                        NavigationLink(destination: StationSelectionView(viewModel: viewModel, field: field, city: city)) {
+                            RowView(destination: city)
+                        }
+                    }
+                }
+                .padding(.horizontal, 0)
+            }
+            .navigationTitle("Выбор города")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden(true)
+            .onAppear {
+                // Скрыть таб-бар при появлении экрана
+                isTabBarHidden = true
+            }
+            .onDisappear {
+                // Показать таб-бар при уходе с экрана
+                isTabBarHidden = false
+            }
+            .toolbar(isTabBarHidden ? .hidden : .visible, for: .tabBar)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Image(systemName: "chevron.backward")
+                            .foregroundColor(Color("AT-black-DN"))
+                            .padding(.horizontal, 0)
                     }
                 }
             }
-            .padding(.horizontal, 0)
         }
-        .navigationTitle("Выбор города")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(true)
-        .onAppear {
-            // Скрыть таб-бар при появлении экрана
-            isTabBarHidden = true
-        }
-        .onDisappear {
-            // Показать таб-бар при уходе с экрана
-            isTabBarHidden = false
-        }
-        .toolbar(isTabBarHidden ? .hidden : .visible, for: .tabBar)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {
-                    dismiss()
-                }) {
-                    Image(systemName: "chevron.backward")
-                        .foregroundColor(.black)
-                        .padding(.horizontal, 0)
-                }
-            }
-        }
+        .padding(.horizontal, 16)
     }
 }
 

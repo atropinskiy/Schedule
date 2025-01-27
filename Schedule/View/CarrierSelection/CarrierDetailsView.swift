@@ -16,6 +16,9 @@ struct CarrierDetailsView: View {
     var body: some View {
         VStack (spacing: 16){
             Image("RZD_detail")
+                .resizable()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(height: 104)
             Text("ОАО «РЖД»")
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .font(.system(size: 24, weight: .bold))
@@ -25,6 +28,10 @@ struct CarrierDetailsView: View {
             }
             
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .padding(16)
+        .navigationTitle("Информация о перевозчике")
+        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -32,16 +39,15 @@ struct CarrierDetailsView: View {
                     dismiss()
                 }) {
                     Image(systemName: "chevron.backward")
-                        .foregroundColor(.black)
+                        .foregroundColor(Color("AT-black-DN"))
                         .padding(.horizontal, 0)
                 }
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .padding(.horizontal, 16)
-        .navigationTitle("Информация о перевозчике")
-        .navigationBarTitleDisplayMode(.inline)
+        
+
     }
+    
 }
 
 #Preview {

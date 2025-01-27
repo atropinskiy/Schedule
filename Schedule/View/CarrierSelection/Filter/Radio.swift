@@ -25,17 +25,18 @@ struct Radio: View {
             Spacer()
             Group {
                 if viewModel.transferFlag != flag {
-                    Image(systemName: "circle") // Радио кнопка, когда выбрано
+                    Image(systemName: "circle")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 24, height: 24)
-                        .foregroundColor(.black) // Цвет для выбранного состояния
+                        .foregroundColor(Color("AT-black-DN"))
                 } else {
-                    Image("radio") // Замените на своё изображение для невыбранного состояния
+                    Image("radio")
+                        .renderingMode(.template)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 24, height: 24)
-                        .foregroundColor(.gray) // Цвет для невыбранного состояния
+                        .foregroundColor(Color("AT-black-DN"))
                 }
             }
             .onTapGesture {

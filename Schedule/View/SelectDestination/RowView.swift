@@ -14,12 +14,13 @@ struct RowView: View {
             Text(destination.name)
                 .font(.system(size: 17, weight: .regular))
                 .buttonStyle(PlainButtonStyle())
-                .foregroundColor(.black) 
+                .foregroundColor(Color("AT-black-DN")) 
             Spacer()
             Image("navArrow")
+                .renderingMode(.template)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, 16)
+        .padding(.horizontal, 0)
         .frame(height: 60)
         .buttonStyle(PlainButtonStyle())
     }

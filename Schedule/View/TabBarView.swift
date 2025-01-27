@@ -8,26 +8,38 @@
 import SwiftUI
 
 struct TabBarView: View {
+    @StateObject var viewModel = ScheduleViewModel()
     @State private var selectedTabIndex = 0
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         TabView(selection: $selectedTabIndex) {
-            ContentView()
+            ContentView(viewModel: viewModel)
                 .tabItem {
                     Image("scheduleTab")
-                    .renderingMode(.template)
-                    .foregroundColor(selectedTabIndex == 0 ? .black : .gray)
+                        .renderingMode(.template)
+                        .foregroundColor(iconColor(for: 0))
+                    Text("Schedule")
                 }
                 .tag(0)
                 
-            SettingsView()
+            SettingsView(viewModel: viewModel)
                 .tabItem {
                     Image("settingsTab")
-                    .renderingMode(.template)
-                    .foregroundColor(selectedTabIndex == 1 ? .black : .gray)
+                        .renderingMode(.template)
+                        .foregroundColor(iconColor(for: 1))
+                    Text("Settings")
                 }
                 .tag(1)
         }
-        .accentColor(.black)
+        .accentColor(Color("AT-black-DN"))
+    }
+    
+    private func iconColor(for tabIndex: Int) -> Color {
+        if selectedTabIndex == tabIndex {
+            return colorScheme == .dark ? .white : Color("AT-black-DN")
+        } else {
+            return .gray
+        }
     }
 }

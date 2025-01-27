@@ -10,7 +10,7 @@ import OpenAPIURLSession
 
 struct ContentView: View {
     
-    @StateObject var viewModel = ScheduleViewModel()
+    @ObservedObject var viewModel = ScheduleViewModel()
     @State private var showDetailView = false
     @State private var stations: [Components.Schemas.Station] = []
     @State private var copyRight: Components.Schemas.Copyright?
@@ -21,7 +21,7 @@ struct ContentView: View {
     private let client: Client
     private let service: NetworkServiceProtocol
     
-    init() {
+    init(viewModel: ScheduleViewModel) {
         do {
             let url = try Servers.Server1.url()
             client = Client(serverURL: url, transport: URLSessionTransport())
@@ -29,7 +29,7 @@ struct ContentView: View {
             let configuration = URLSessionConfiguration.default
             configuration.timeoutIntervalForRequest = 0
             configuration.timeoutIntervalForResource = 0
-            
+            self.viewModel = viewModel
             self.service = NetworkService(client: client, apikey: Constants.token)
         } catch {
             fatalError("Не удалось получить URL для сервера: \(error.localizedDescription)")
@@ -126,7 +126,7 @@ struct ContentView: View {
                                     .frame(width: 24, height: 24)
                             }
                             .frame(width: 36, height: 36)
-                            .background()
+                            .background(.white)
                             .cornerRadius(40)
                         }
                         .background(Color.blue)

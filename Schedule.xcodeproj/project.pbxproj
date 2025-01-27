@@ -17,6 +17,7 @@
 		22BC89772D47D294004FD6A2 /* StoryViewFullScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BC89762D47D294004FD6A2 /* StoryViewFullScreen.swift */; };
 		22BC897E2D47FA3B004FD6A2 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BC897D2D47FA3B004FD6A2 /* ErrorView.swift */; };
 		22BC89852D48020F004FD6A2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BC89842D48020F004FD6A2 /* SettingsView.swift */; };
+		22BC89882D480457004FD6A2 /* AgreementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BC89872D480457004FD6A2 /* AgreementView.swift */; };
 		22C086A12D2030EE001B7E1E /* openapi.yaml in Resources */ = {isa = PBXBuildFile; fileRef = 22C086A02D2030EE001B7E1E /* openapi.yaml */; };
 		22D693FE2D1ECBED00691B46 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D693FD2D1ECBED00691B46 /* AppDelegate.swift */; };
 		22D694002D1ECBED00691B46 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D693FF2D1ECBED00691B46 /* SceneDelegate.swift */; };
@@ -52,6 +53,7 @@
 		22BC89762D47D294004FD6A2 /* StoryViewFullScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryViewFullScreen.swift; sourceTree = "<group>"; };
 		22BC897D2D47FA3B004FD6A2 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		22BC89842D48020F004FD6A2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		22BC89872D480457004FD6A2 /* AgreementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementView.swift; sourceTree = "<group>"; };
 		22C086A02D2030EE001B7E1E /* openapi.yaml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = openapi.yaml; sourceTree = SOURCE_ROOT; };
 		22D693FA2D1ECBED00691B46 /* Schedule.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Schedule.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22D693FD2D1ECBED00691B46 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				22BC89842D48020F004FD6A2 /* SettingsView.swift */,
+				22BC89872D480457004FD6A2 /* AgreementView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				22404F6C2D43C0020075ADD6 /* StationSelectionView.swift in Sources */,
 				22BC89852D48020F004FD6A2 /* SettingsView.swift in Sources */,
 				22E40FED2D451E6700D97D8F /* CarrierDetailsView.swift in Sources */,
+				22BC89882D480457004FD6A2 /* AgreementView.swift in Sources */,
 				228E3F582D436AD400D0C92A /* ScheduleViewModel.swift in Sources */,
 				22E40FD82D44DB6500D97D8F /* CarrierCard.swift in Sources */,
 				22D694152D1EEFFB00691B46 /* TabBarView.swift in Sources */,

@@ -10,6 +10,7 @@ import SwiftUI
 struct StationSelectionView: View {
     @ObservedObject var viewModel: ScheduleViewModel
     @State private var searchString = ""
+    @State private var isTabBarHidden: Bool = true
     @Environment(\.dismiss) var dismiss
     private var field: String
     private var city: Destinations
@@ -27,7 +28,7 @@ struct StationSelectionView: View {
             SearchBar(searchText: $searchString)
                 .padding(.bottom, 16)
             ScrollView {
-                VStack() {
+                VStack(spacing:0) {
                     ForEach(viewModel.stations, id: \.self) { station in
                         RowView(destination: station)
                             .contentShape(Rectangle())
@@ -45,22 +46,32 @@ struct StationSelectionView: View {
                     .padding(0)
                 }
                 .navigationTitle("Выбор станции")
+                
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarBackButtonHidden(true)
+                .onAppear {
+                    isTabBarHidden = true
+                }
+                .onDisappear {
+                    isTabBarHidden = false
+                }
+                .toolbar(isTabBarHidden ? .hidden : .visible, for: .tabBar)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button(action: {
                             dismiss()
                         }) {
                             Image(systemName: "chevron.backward")
-                                .foregroundColor(.black)
+                                .foregroundColor(Color("AT-black-DN"))
                                 .padding(.horizontal, 0)
                         }
                     }
                 }
+                .toolbarBackground(Color("AT-black-DN"), for: .navigationBar)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .padding(.horizontal, 16)
 
 
         

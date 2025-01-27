@@ -21,6 +21,11 @@ class ScheduleViewModel: ObservableObject {
     @Published var isStationSelected = false
     @Published var timeSelections: [String]
     @Published var transferFlag: Bool?
+    @Published var isDarkMode: Bool = false {
+        didSet {
+            updateUserInterfaceStyle()
+        }
+    }
     
     enum Path: Hashable {
         case citySelectionView(field: String)
@@ -39,7 +44,14 @@ class ScheduleViewModel: ObservableObject {
         path.removeLast()
     }
     
+    private func updateUserInterfaceStyle() {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            windowScene.windows.first?.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
+        }
+    }
+    
     init() {
+        
         let story1 = Story(name: "Story1", imgName: "story1_FS")
         let story2 = Story(name: "Story2", imgName: "story2_FS")
         let story3 = Story(name: "Story3", imgName: "story3_FS")

@@ -67,7 +67,7 @@ struct CarrierView: View {
                             dismiss()
                         }) {
                             Image(systemName: "chevron.backward")
-                                .foregroundColor(.black)
+                                .foregroundColor(Color("AT-black-DN"))
                                 .padding(.horizontal, 0)
                         }
                     }

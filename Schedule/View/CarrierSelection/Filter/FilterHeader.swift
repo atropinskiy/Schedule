@@ -16,7 +16,7 @@ struct FilterHeader: View {
         Text(title)
             .font(.system(size: 24, weight: .bold))
             .background(.clear)
-            .foregroundColor(.black)
+            .foregroundColor(Color("AT-black-DN"))
             .padding(0)
     }
 }

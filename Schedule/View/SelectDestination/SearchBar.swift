@@ -9,7 +9,7 @@ struct SearchBar: View {
     
     @Binding var searchText: String
     @State var isSearching: Bool = false
-    var placeholder = "Поиск..."
+    var placeholder = "Введите запрос"
     
     var body: some View {
         HStack (spacing: 0) {
@@ -20,7 +20,9 @@ struct SearchBar: View {
                         .padding(.leading, 8)
                         .autocorrectionDisabled(true)
                         .autocapitalization(.none)
+                        
                 }
+                
                 .padding()
                 .cornerRadius(16)
                 .padding(.horizontal)
@@ -50,7 +52,7 @@ struct SearchBar: View {
                 )
             }
             .frame(height: 37)
-            .background(Color(red: 118.0/255, green: 118.0/255, blue: 128.0/255).opacity(0.12))
+            .background(Color("AT-searchBarBg-DN"))
             .cornerRadius(10)
             
             if isSearching {
@@ -68,6 +70,6 @@ struct SearchBar: View {
             }
         }
         .frame(height: 37)
-        .padding(.horizontal, 16)
+
     }
 }

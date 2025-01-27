@@ -22,6 +22,7 @@ struct CarrierCard: View {
                             Text(cardCarrier.name)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .font(.system(size: 17, weight: .regular))
+                                .foregroundColor(.black)
                             if cardCarrier.transfer != "" {
                                 Text(cardCarrier.transfer ?? "")
                                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -34,6 +35,7 @@ struct CarrierCard: View {
                         VStack{
                             Text(cardCarrier.date)
                                 .font(.system(size: 12, weight: .regular))
+                                .foregroundColor(.black)
                         }
                         .padding(.trailing, 7)
                         .padding(.bottom, 15)
@@ -44,12 +46,15 @@ struct CarrierCard: View {
                 HStack {
                     Text(cardCarrier.timeStart)
                         .font(.system(size: 17, weight: .regular))
+                        .foregroundColor(.black)
                     Image("Separator")
                     Text("20 Часов")
                         .font(.system(size: 12, weight: .regular))
+                        .foregroundColor(.black)
                     Image("Separator")
                     Text(cardCarrier.timeFinish)
                         .font(.system(size: 17, weight: .regular))
+                        .foregroundColor(.black)
                 }
                 .frame(height: 48)
             }
@@ -67,5 +72,5 @@ struct CarrierCard: View {
 }
 
 #Preview {
-    CarrierCard(cardCarrier: CarrierModel(name: "RZD", transfer: "С пересадкой в Костроме", timeStart: "22:30", timeFinish: "08:15", iconName: "RZD", date: "14 января"))
+    CarrierCard(cardCarrier: CarrierModel(name: "РЖД", transfer: "С пересадкой в Костроме", timeStart: "22:30", timeFinish: "08:15", iconName: "RZD", date: "14 января"))
 }
