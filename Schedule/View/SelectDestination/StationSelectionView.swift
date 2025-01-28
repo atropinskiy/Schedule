@@ -28,56 +28,66 @@ struct StationSelectionView: View {
             return viewModel.stations.filter { $0.name.localizedCaseInsensitiveContains(searchString) }
         }
     }
-
+    
     var body: some View {
         VStack (spacing: 0) {
             SearchBar(searchText: $searchString)
                 .padding(.bottom, 16)
-            ScrollView {
-                VStack(spacing:0) {
-                    ForEach(filteredStations, id: \.self) { station in
-                        RowView(destination: station)
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                if field == "from" {
-                                    viewModel.selectedStationFrom = station
-                                    viewModel.selectedCityFrom = city
-                                } else {
-                                    viewModel.selectedStationTo = station
-                                    viewModel.selectedCityTo = city
-                                }
-                                viewModel.removeAll()
-                            }
+            ZStack {
+                if filteredStations.isEmpty {
+                    // Заглушка, если городов нет
+                    VStack {
+                        Text("Вариантов нет")
+                            .font(.system(size: 25, weight: .bold))
                     }
-                    .padding(0)
-                }
-                .navigationTitle("Выбор станции")
-                
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationBarBackButtonHidden(true)
-                .onAppear {
-                    isTabBarHidden = true
-                }
-                .onDisappear {
-                    isTabBarHidden = false
-                }
-                .toolbar(isTabBarHidden ? .hidden : .visible, for: .tabBar)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: {
-                            dismiss()
-                        }) {
-                            Image(systemName: "chevron.backward")
-                                .foregroundColor(Color("AT-black-DN"))
-                                .padding(.horizontal, 0)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    ScrollView {
+                        VStack(spacing:0) {
+                            ForEach(filteredStations, id: \.self) { station in
+                                RowView(destination: station)
+                                    .contentShape(Rectangle())
+                                    .onTapGesture {
+                                        if field == "from" {
+                                            viewModel.selectedStationFrom = station
+                                            viewModel.selectedCityFrom = city
+                                        } else {
+                                            viewModel.selectedStationTo = station
+                                            viewModel.selectedCityTo = city
+                                        }
+                                        viewModel.removeAll()
+                                    }
+                            }
+                            .padding(0)
                         }
                     }
                 }
-                .toolbarBackground(Color("AT-black-DN"), for: .navigationBar)
+            }
+            .navigationTitle("Выбор станции")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden(true)
+            .onAppear {
+                isTabBarHidden = true
+            }
+            .onDisappear {
+                isTabBarHidden = false
+            }
+            .toolbarBackground(Color("AT-black-DN"), for: .navigationBar)
+            .toolbar(isTabBarHidden ? .hidden : .visible, for: .tabBar)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Image(systemName: "chevron.backward")
+                            .foregroundColor(Color("AT-black-DN"))
+                            .padding(.horizontal, 0)
+                    }
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .padding(.horizontal, 16)
-
+        
     }
 }

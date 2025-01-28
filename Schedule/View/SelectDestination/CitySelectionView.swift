@@ -10,6 +10,7 @@ struct CitySelectionView: View {
     @ObservedObject private var viewModel: ScheduleViewModel
     @State private var searchString = ""
     @State private var isTabBarHidden: Bool = true
+    @State private var showingSub = false
     private var field: String
     @Environment(\.dismiss) private var dismiss
     
@@ -30,16 +31,29 @@ struct CitySelectionView: View {
         VStack(spacing:0) {
             SearchBar(searchText: $searchString)
                 .padding(.bottom, 16)
-            ScrollView {
-                VStack(spacing:0) {
-                    ForEach(filteredTowns, id: \.self) { city in
-                        NavigationLink(destination: StationSelectionView(viewModel: viewModel, field: field, city: city)) {
-                            RowView(destination: city)
+            
+            ZStack {
+                if filteredTowns.isEmpty {
+                    VStack {
+                        Text("Вариантов нет")
+                            .font(.system(size: 25, weight: .bold))
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    ScrollView {
+                        VStack(spacing:0) {
+                            ForEach(filteredTowns, id: \.self) { city in
+                                NavigationLink(destination: StationSelectionView(viewModel: viewModel, field: field, city: city)) {
+                                    RowView(destination: city)
+                                }
+                            }
                         }
                     }
                 }
-                .padding(.horizontal, 0)
+                
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.horizontal, 0)
             .navigationTitle("Выбор города")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
@@ -62,6 +76,7 @@ struct CitySelectionView: View {
                 }
             }
         }
+        
         .padding(.horizontal, 16)
     }
 }

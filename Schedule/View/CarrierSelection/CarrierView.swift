@@ -21,6 +21,28 @@ struct CarrierView: View {
         self.stationTo = destinationTo
     }
     
+    
+    private var filteredCarriers: [CarrierModel] {
+        viewModel.carrierList.filter { carrier in
+            // Условие на пересадку
+            let transferCondition = (viewModel.transferFlag ?? true) ? true : (carrier.transfer?.isEmpty ?? true)
+            
+            // Условие на время
+            let timeCondition: Bool
+            if !viewModel.timeSelections.isEmpty {
+                let carrierInterval = viewModel.carrierInInterval(carrier: carrier)
+                print(carrierInterval)
+                timeCondition = viewModel.timeSelections.contains { selectedInterval in
+                    selectedInterval.contains(carrierInterval)
+                }
+            } else {
+                timeCondition = true
+            }
+            
+            return transferCondition && timeCondition
+        }
+    }
+    
     var body: some View {
         ZStack {
             VStack (spacing: 16){
@@ -28,53 +50,29 @@ struct CarrierView: View {
                     .font(.system(size: 24, weight: .bold))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, 16)
-                ScrollView {
-                    LazyVStack(spacing: 8) {
-                        ForEach(viewModel.carrierList.filter { carrier in
-                            let transferCondition = (viewModel.transferFlag ?? true) ? true : (carrier.transfer?.isEmpty ?? true)
-                            let timeCondition: Bool
-                            if !viewModel.timeSelections.isEmpty {
-                                let carrierInterval = viewModel.carrierInInterval(carrier: carrier)
-                                print(carrierInterval)
-                                timeCondition = viewModel.timeSelections.contains { selectedInterval in
-                                    selectedInterval.contains(carrierInterval)
+                if filteredCarriers.isEmpty {
+                    VStack {
+                        Text("Вариантов нет")
+                            .font(.system(size: 25, weight: .bold))
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.bottom, 60)
+                } else {
+                    ScrollView {
+                        LazyVStack(spacing: 8) {
+                            ForEach(filteredCarriers, id: \.id) { carrier in
+                                NavigationLink(destination: CarrierDetailsView(carrier: carrier.name)) {
+                                    CarrierCard(cardCarrier: carrier)
                                 }
-                            } else {
-                                timeCondition = true
                             }
-                            return transferCondition && timeCondition
-                        }, id: \.id) { carrier in
-                            NavigationLink(destination: CarrierDetailsView(carrier: carrier.name)) {
-                                CarrierCard(cardCarrier: carrier)
-                            }
-                            
-                            
-                            
+                            .buttonStyle(PlainButtonStyle())
+                            .zIndex(0)
                         }
-                        .buttonStyle(PlainButtonStyle())
-                        .zIndex(0)
                     }
-
                     .padding(.horizontal, 0)
+                    .scrollIndicators(.hidden)
                 }
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationTitle("")
-                .tint(.black)
-                .navigationBarBackButtonHidden(true)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: {
-                            dismiss()
-                        }) {
-                            Image(systemName: "chevron.backward")
-                                .foregroundColor(Color("AT-black-DN"))
-                                .padding(.horizontal, 0)
-                        }
-                    }
-                }
-                .scrollIndicators(.hidden)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                .padding(.horizontal, 0)
+                
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             
@@ -85,7 +83,6 @@ struct CarrierView: View {
                     Text("Уточнить время")
                         .font(.system(size: 17, weight: .bold))
                         .foregroundColor(.white)
-                    
                         .frame(maxWidth: .infinity)
                         .frame(height: 60)
                         .background(Color("AT-blue"))
@@ -97,6 +94,22 @@ struct CarrierView: View {
             }
             
         }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("")
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    dismiss()
+                }) {
+                    Image(systemName: "chevron.backward")
+                        .foregroundColor(Color("AT-black-DN"))
+                        .padding(.horizontal, 0)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .padding(.horizontal, 0)
         .padding(.horizontal, 16)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(isTabBarHidden ? .hidden : .visible, for: .tabBar)
