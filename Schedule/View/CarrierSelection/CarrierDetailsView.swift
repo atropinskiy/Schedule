@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct CarrierDetailsView: View {
+    
     @Environment(\.dismiss) private var dismiss
     private var carrier: String
+    
     init(carrier: String) {
         self.carrier = carrier
     }
+    
     var body: some View {
         VStack (spacing: 16){
             Image("RZD_detail")
@@ -44,10 +47,7 @@ struct CarrierDetailsView: View {
                 }
             }
         }
-        
-
     }
-    
 }
 
 #Preview {

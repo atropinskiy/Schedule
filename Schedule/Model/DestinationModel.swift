@@ -27,3 +27,4 @@ struct CarrierModel: Identifiable, Hashable {
     var iconName: String
     var date: String
 }
+

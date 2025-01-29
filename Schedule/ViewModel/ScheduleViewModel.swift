@@ -19,6 +19,7 @@ class ScheduleViewModel: ObservableObject {
     @Published var carrierList: [CarrierModel]
     @Published var timeSelections: [String]
     @Published var transferFlag: Bool?
+    @Published var showError: ErrorType? = nil
     @Published var isDarkMode: Bool = false {
         didSet {
             updateUserInterfaceStyle()

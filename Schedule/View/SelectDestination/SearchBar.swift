@@ -55,7 +55,7 @@ struct SearchBar: View {
             
         }
         .frame(height: 37)
-        .contentShape(Rectangle()) // Убедитесь, что зона, по которой можно кликнуть, занимает всю область экрана
+        .contentShape(Rectangle())
     }
 }
 

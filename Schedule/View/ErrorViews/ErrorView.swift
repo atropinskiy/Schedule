@@ -8,22 +8,20 @@
 import SwiftUI
 
 struct ErrorView: View {
-    private var label: String
-    private var imgName: String
+    private var errorType: ErrorType
     
-    init(label: String, imgName: String) {
-        self.label = label
-        self.imgName = imgName
+    init(errorType: ErrorType) {
+        self.errorType = errorType
     }
     var body: some View {
         VStack (spacing: 16) {
-            Image(imgName)
-            Text(label)
+            Image(errorType.errorModel.imgName)
+            Text(errorType.errorModel.label)
                 .font(.system(size: 24, weight: .bold))
         }
     }
 }
 
 #Preview {
-    ErrorView(label: "Ошибка сервера", imgName: "error1")
+    ErrorView(errorType: ErrorType.internet_error)
 }

@@ -14,23 +14,44 @@ struct TabBarView: View {
 
     var body: some View {
         TabView(selection: $selectedTabIndex) {
-            ContentView(viewModel: viewModel)
-                .tabItem {
-                    Image("scheduleTab")
-                        .renderingMode(.template)
-                        .foregroundColor(iconColor(for: 0))
-                    Text("Schedule")
-                }
-                .tag(0)
-                
-            SettingsView(viewModel: viewModel)
-                .tabItem {
-                    Image("settingsTab")
-                        .renderingMode(.template)
-                        .foregroundColor(iconColor(for: 1))
-                    Text("Settings")
-                }
-                .tag(1)
+            if let errorType =  viewModel.showError {
+                ErrorView(errorType: errorType)
+                    .tabItem {
+                        Image("scheduleTab")
+                            .renderingMode(.template)
+                            .foregroundColor(iconColor(for: 0))
+                        Text("Schedule")
+                    }
+                    .tag(0)
+            } else {
+                ContentView(viewModel: viewModel)
+                    .tabItem {
+                        Image("scheduleTab")
+                            .renderingMode(.template)
+                            .foregroundColor(iconColor(for: 0))
+                        Text("Schedule")
+                    }
+                    .tag(0)
+            }
+            if let errorType =  viewModel.showError {
+                ErrorView(errorType: errorType)
+                    .tabItem {
+                        Image("scheduleTab")
+                            .renderingMode(.template)
+                            .foregroundColor(iconColor(for: 0))
+                        Text("Schedule")
+                    }
+                    .tag(0)
+            } else {
+                SettingsView(viewModel: viewModel)
+                    .tabItem {
+                        Image("settingsTab")
+                            .renderingMode(.template)
+                            .foregroundColor(iconColor(for: 1))
+                        Text("Settings")
+                    }
+                    .tag(1)
+            }
         }
         .accentColor(Color("AT-black-DN"))
     }
