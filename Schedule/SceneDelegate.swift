@@ -8,6 +8,7 @@
 import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+
     var window: UIWindow?
 
     func scene(
@@ -15,14 +16,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         willConnectTo session: UISceneSession,
         options connectionOptions: UIScene.ConnectionOptions
     ) {
-        if let windowScene = scene as? UIWindowScene {
-            let window = UIWindow(windowScene: windowScene)
-            let tabBarView = TabBarView()
+        guard let windowScene = (scene as? UIWindowScene) else { return }
 
-            window.rootViewController = UIHostingController(rootView: tabBarView)
-            self.window = window
-            window.makeKeyAndVisible()
-        }
+        let contentView = TabBarView() // Твой SwiftUI-контент
+
+        let window = UIWindow(windowScene: windowScene)
+        window.rootViewController = UIHostingController(rootView: contentView)
+        self.window = window
+        window.makeKeyAndVisible()
     }
 }
 
