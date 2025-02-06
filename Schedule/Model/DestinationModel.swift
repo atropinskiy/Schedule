@@ -16,6 +16,9 @@ struct Story: Identifiable, Hashable {
     var id = UUID()
     var name: String
     var imgName: String
+    var shown: Bool
+    var text1: String
+    var text2: String
 }
 
 struct CarrierModel: Identifiable, Hashable {

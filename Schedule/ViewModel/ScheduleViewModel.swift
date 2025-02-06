@@ -20,6 +20,8 @@ class ScheduleViewModel: ObservableObject {
     @Published var timeSelections: [String]
     @Published var transferFlag: Bool?
     @Published var showError: ErrorType? = nil
+    @Published var showingStories: Bool = false
+    @Published var selectedStoryIndex: Int?
     @Published var isDarkMode: Bool = false {
         didSet {
             updateUserInterfaceStyle()
@@ -43,6 +45,20 @@ class ScheduleViewModel: ObservableObject {
         path.removeLast()
     }
     
+    func selectStory(at index: Int) {
+        selectedStoryIndex = index
+        showingStories = true
+    }
+    
+    func closeStory() {
+        showingStories = false
+        selectedStoryIndex = nil
+    }
+    
+    func setStoryShown(id: Int) {
+        story[id].shown = true
+    }
+    
     private func updateUserInterfaceStyle() {
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
             windowScene.windows.first?.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
@@ -51,9 +67,42 @@ class ScheduleViewModel: ObservableObject {
     
     init() {
         
-        let story1 = Story(name: "Story1", imgName: "story1_FS")
-        let story2 = Story(name: "Story2", imgName: "story2_FS")
-        let story3 = Story(name: "Story3", imgName: "story3_FS")
+        let story1 = Story(
+            name: "Story1",
+            imgName: "story1_FS",
+            shown: false,
+            text1: "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text",
+            text2: "TextTextTextTextTextTextTextTextTextTextTextTextTextTextText"
+        )        
+        let story2 = Story(
+            name: "Story2",
+            imgName: "story2_FS",
+            shown: false,
+            text1: "TextTextTextTextTextTextTextTextTextTextTextTextTextTextText",
+            text2: "TextTextTextTextTextTextTextTextTextTextTextTextTextTextText"
+        )        
+        let story3 = Story(
+            name: "Story3",
+            imgName: "story3_FS",
+            shown: false,
+            text1: "TextTextTextTextTextTextTextTextTextTextTextTextTextTextText",
+            text2: "TextTextTextTextTextTextTextTextTextTextTextTextTextTextText"
+        )        
+        let story4 = Story(
+            name: "Story3",
+            imgName: "story1_FS",
+            shown: false,
+            text1: "TextTextTextTextTextTextTextTextTextTextTextTextTextTextText",
+            text2: "TextTextTextTextTextTextTextTextTextTextTextTextTextTextText"
+        )        
+        let story5 = Story(
+            name: "Story3",
+            imgName: "story2_FS",
+            shown: false,
+            text1: "TextTextTextTextTextTextTextTextTextTextTextTextTextTextText",
+            text2: "TextTextTextTextTextTextTextTextTextTextTextTextTextTextText"
+        )
+
         
         let town1 = Destinations(name: "Москва")
         let town2 = Destinations(name: "Санкт-Петербург")
@@ -75,7 +124,7 @@ class ScheduleViewModel: ObservableObject {
         let carrier8 = CarrierModel(name: "ФГК",transfer: "", timeStart: "01:15", timeFinish: "09:00", iconName: "FGK", date: "15 января")
         
         self.timeSelections = []
-        self.story = [story1, story2, story3]
+        self.story = [story1, story2, story3, story4, story5]
         self.towns = [town1, town2, town3, town4]
         self.stations = [station1, station2, station3, station4]
         self.carrierList = [carrier1, carrier2, carrier3, carrier4, carrier5, carrier6, carrier7, carrier8]
