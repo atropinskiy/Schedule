@@ -105,24 +105,6 @@ struct ContentView: View {
     }
 }
 
-extension ContentView {
-    struct StoryImageModifier: ViewModifier {
-        var borderColor: Color?
-        var opacity: Double
-        
-        func body(content: Content) -> some View {
-            content
-                .scaledToFit()
-                .frame(width: 92)
-                .opacity(opacity)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-                .overlay(
-                    borderColor.map { RoundedRectangle(cornerRadius: 16).strokeBorder($0, lineWidth: 4) }
-                )
-        }
-    }
-}
-
 struct DestinationsStack: View {
     @ObservedObject var viewModel: ScheduleViewModel
     var body: some View {
