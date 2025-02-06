@@ -15,6 +15,7 @@ struct ContentView: View {
     @State private var copyRight: Components.Schemas.Copyright?
     @State private var showingStories = false
     @State private var selectedStory: Story? = nil
+    
     private let client: Client
     private let service: NetworkServiceProtocol
     

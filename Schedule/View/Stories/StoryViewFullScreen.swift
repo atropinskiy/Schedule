@@ -6,11 +6,15 @@
 //
 
 import SwiftUI
+import Combine
 
 struct StoryViewFullScreen: View {
     @ObservedObject private var viewModel: ScheduleViewModel
     @Environment(\.presentationMode) private var presentationMode
+    @State private var timer: Timer.TimerPublisher = Timer.publish(every: 5, on: .main, in: .common)
+    @State private var cancellable: Cancellable?
     private var story: Story
+    @State private var currentStoryIndex = 0
     
     init(viewModel: ScheduleViewModel, story: Story) {
         print("Initializing Story")
@@ -63,7 +67,21 @@ struct StoryViewFullScreen: View {
         }
         .background(.black)
         .onAppear {
+            timer = Timer.publish(every: 5, on: .main, in: .common)
+            cancellable = timer.connect()
             print("StoryView appeared with story: \(story.name)")
+        }
+        .onDisappear {
+            cancellable?.cancel()
+        }
+    }
+    
+    private func nextStory() {
+        let nextStoryIndex = currentStoryIndex + 1
+        if nextStoryIndex < viewModel.story.count {
+            currentStoryIndex = nextStoryIndex
+        } else {
+            currentStoryIndex = 0
         }
     }
 }
