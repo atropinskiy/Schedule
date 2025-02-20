@@ -7,11 +7,10 @@
 
 import SwiftUI
 
+@MainActor
 class ScheduleViewModel: ObservableObject {
     @Published var path = NavigationPath()
     @Published var story: [Story]
-    @Published var towns: [Destinations]
-    @Published var stations: [Destinations]
     @Published var selectedStationFrom: Destinations?
     @Published var selectedStationTo: Destinations?
     @Published var selectedCityFrom: Destinations?
@@ -22,6 +21,7 @@ class ScheduleViewModel: ObservableObject {
     @Published var showError: ErrorType? = nil
     @Published var showingStories: Bool = false
     @Published var selectedStoryIndex: Int?
+    
     @Published var isDarkMode: Bool = false {
         didSet {
             updateUserInterfaceStyle()
@@ -102,17 +102,6 @@ class ScheduleViewModel: ObservableObject {
             text1: "TextTextTextTextTextTextTextTextTextTextTextTextTextTextText",
             text2: "TextTextTextTextTextTextTextTextTextTextTextTextTextTextText"
         )
-
-        
-        let town1 = Destinations(name: "Москва")
-        let town2 = Destinations(name: "Санкт-Петербург")
-        let town3 = Destinations(name: "Сочи")
-        let town4 = Destinations(name: "Горный воздух")
-        
-        let station1 = Destinations(name: "Станция 1")
-        let station2 = Destinations(name: "Станция 2")
-        let station3 = Destinations(name: "Станция 3")
-        let station4 = Destinations(name: "Станция 4")
         
         let carrier1 = CarrierModel(name: "РЖД",transfer: "С пересадкой в Костроме", timeStart: "22:30", timeFinish: "08:15", iconName: "RZD", date: "14 января")
         let carrier2 = CarrierModel(name: "ФГК",transfer: "", timeStart: "01:15", timeFinish: "09:00", iconName: "FGK", date: "15 января")
@@ -125,8 +114,6 @@ class ScheduleViewModel: ObservableObject {
         
         self.timeSelections = []
         self.story = [story1, story2, story3, story4, story5]
-        self.towns = [town1, town2, town3, town4]
-        self.stations = [station1, station2, station3, station4]
         self.carrierList = [carrier1, carrier2, carrier3, carrier4, carrier5, carrier6, carrier7, carrier8]
     }
     

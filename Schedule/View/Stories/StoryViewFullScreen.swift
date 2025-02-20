@@ -159,10 +159,3 @@ struct StoryViewFullScreen_Previews: PreviewProvider {
         return StoryViewFullScreen(viewModel: viewModel, storyIndex: 0)
     }
 }
-
-
-
-
-
-
-

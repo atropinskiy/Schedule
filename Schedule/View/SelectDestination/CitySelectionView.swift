@@ -8,6 +8,7 @@
 import SwiftUI
 struct CitySelectionView: View {
     @ObservedObject private var viewModel: ScheduleViewModel
+    @EnvironmentObject var destinationViewModel: DestinationViewModel
     @State private var searchString = ""
     @State private var isTabBarHidden: Bool = true
     @State private var showingSub = false
@@ -20,10 +21,14 @@ struct CitySelectionView: View {
     }
     
     private var filteredTowns: [Destinations] {
-        if searchString.isEmpty {
-            return viewModel.towns
+        if let cities = destinationViewModel.cities {
+            if searchString.isEmpty {
+                return cities
+            } else {
+                return cities.filter { $0.name.localizedCaseInsensitiveContains(searchString) }
+            }
         } else {
-            return viewModel.towns.filter { $0.name.localizedCaseInsensitiveContains(searchString) }
+            return []
         }
     }
     
@@ -41,7 +46,7 @@ struct CitySelectionView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
                     ScrollView {
-                        VStack(spacing:0) {
+                        LazyVStack(spacing:0) {
                             ForEach(filteredTowns, id: \.self) { city in
                                 NavigationLink(destination: StationSelectionView(viewModel: viewModel, field: field, city: city)) {
                                     RowView(destination: city)
@@ -84,6 +89,7 @@ struct CitySelectionView: View {
 struct CitySelectionView_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = ScheduleViewModel()
+
         return CitySelectionView(viewModel: viewModel, field: "from")
     }
 }

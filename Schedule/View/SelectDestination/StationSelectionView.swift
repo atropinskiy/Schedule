@@ -9,6 +9,7 @@ import SwiftUI
 
 struct StationSelectionView: View {
     @ObservedObject private var viewModel: ScheduleViewModel
+    @EnvironmentObject var destinationViewModel: DestinationViewModel
     @State private var searchString = ""
     @State private var isTabBarHidden: Bool = true
     @Environment(\.dismiss) private var dismiss
@@ -23,9 +24,9 @@ struct StationSelectionView: View {
     
     private var filteredStations: [Destinations] {
         if searchString.isEmpty {
-            return viewModel.stations
+            return destinationViewModel.stations
         } else {
-            return viewModel.stations.filter { $0.name.localizedCaseInsensitiveContains(searchString) }
+            return destinationViewModel.stations.filter { $0.name.localizedCaseInsensitiveContains(searchString) }
         }
     }
     
@@ -68,6 +69,7 @@ struct StationSelectionView: View {
             .navigationBarBackButtonHidden(true)
             .onAppear {
                 isTabBarHidden = true
+                destinationViewModel.getStations(for: city.name)
             }
             .onDisappear {
                 isTabBarHidden = false
