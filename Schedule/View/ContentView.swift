@@ -13,8 +13,7 @@ struct ContentView: View {
     @ObservedObject var viewModel: ScheduleViewModel
     @State private var stations: [Components.Schemas.Station] = []
     @State private var copyRight: Components.Schemas.Copyright?
-    @State private var showingStories = false
-    @State private var selectedStory: Story? = nil
+    
     private let client: Client
     private let service: NetworkServiceProtocol
     
@@ -31,7 +30,6 @@ struct ContentView: View {
         } catch {
             fatalError("Не удалось получить URL для сервера: \(error.localizedDescription)")
         }
-//        viewModel.showError = .internet_error
     }
     
     var body: some View {
@@ -40,32 +38,60 @@ struct ContentView: View {
             VStack(spacing: 12) {
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack(spacing: 12) {
-                        ForEach(viewModel.story) { story in
-                            Image(story.name)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 140)
-                                .onTapGesture {
-                                    selectedStory = story
-                                    DispatchQueue.main.async {
-                                        showingStories = true
-                                    }
-                                    print("Selected Story: \(selectedStory?.name ?? "nil")")
-                                    print("showingStories is now: \(showingStories)")
+                        ForEach(viewModel.story.indices, id: \.self) { index in
+                            let story = viewModel.story[index]
+                            ZStack {
+                                if story.shown == false {
+                                    Image(story.imgName)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 92, height: 140)
+                                        .clipped()
+                                        .scaledToFit()
+                                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                                        .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(Color.blue, lineWidth: 4))
+                                        .onTapGesture {
+                                            viewModel.setStoryShown(id: index)
+                                            viewModel.selectStory(at: index)
+                                        }
+                                } else {
+                                    Image(story.imgName)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 92, height: 140)
+                                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                                        .opacity(0.5)
+                                        .onTapGesture {
+                                            viewModel.selectStory(at: index)
+                                        }
+                                    
                                 }
+                                VStack {
+                                    Spacer()
+                                    Text(story.text1)
+                                        .foregroundColor(.white)
+                                        .lineLimit(3)
+                                        .truncationMode(.tail)
+                                        .font(.system(size: 12, weight: .regular))
+                                        .padding(.horizontal, 0)
+                                        .padding(.bottom, 12)
+                                    
+                                }
+                                .frame(width: 76, alignment: .leading)
+                                .padding(0)
+                            }
                         }
                     }
-                    
                 }
-                .fullScreenCover(isPresented: $showingStories) {
-                    if let selectedStory = selectedStory {
-                        StoryViewFullScreen(viewModel: viewModel, story: selectedStory)
+                .frame(height: 140)
+                .fullScreenCover(isPresented: $viewModel.showingStories, onDismiss: {
+                    viewModel.closeStory()
+                }) {
+                    if let selectedStoryIndex = viewModel.selectedStoryIndex {
+                        StoryViewFullScreen(viewModel: viewModel, storyIndex: selectedStoryIndex)
                     } else {
                         Text("No story selected")
                     }
-                }
-                .onChange(of: selectedStory) { newStory in
-                    print("Selected story changed: \(newStory?.name ?? "nil")")
                 }
                 .padding(.top, 24)
                 .frame(height: 188)
@@ -73,10 +99,9 @@ struct ContentView: View {
                 DestinationsStack(viewModel: viewModel)
                 Spacer()
             }
-            .padding(.horizontal, 16)
-            .onChange(of: viewModel.path) { _ in
-            }
+            
         }
+        .padding(.horizontal, 16)
     }
 }
 
