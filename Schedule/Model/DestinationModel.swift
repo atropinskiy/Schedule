@@ -7,10 +7,7 @@
 
 import Foundation
 
-struct Destinations: Identifiable, Hashable {
-    var id = UUID()
-    var name: String
-}
+
 
 struct Story: Identifiable, Hashable {
     var id = UUID()

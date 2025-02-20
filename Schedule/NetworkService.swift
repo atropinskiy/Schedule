@@ -40,15 +40,20 @@ typealias StationList = Components.Schemas.CountriesList
 typealias Schedules = Components.Schemas.Schedules
 
 
-final class NetworkService: NetworkServiceProtocol {
+actor NetworkService: NetworkServiceProtocol {
     private let client: Client
     private let apikey: String
     let configuration = URLSessionConfiguration.default
     
     
-    init(client: Client, apikey: String) {
-        self.client = client
-        self.apikey = apikey
+    init() {
+        do {
+            let url = try Servers.Server1.url()
+            self.client = Client(serverURL: url, transport: URLSessionTransport())
+            self.apikey = Constants.token
+        } catch {
+            fatalError("Ошибка при получении URL сервера: \(error.localizedDescription)")
+        }
     }
     
     func getNearestStations(lat: Double, lng: Double, distance: Int) async throws -> NearestStations {
@@ -58,7 +63,6 @@ final class NetworkService: NetworkServiceProtocol {
             lng: lng,
             distance: distance
         ))
-        print("Ответ сервера:", response)
         return try response.ok.body.json
     }
     
@@ -128,62 +132,32 @@ final class NetworkService: NetworkServiceProtocol {
         case xml = "xml"
     }
     
+
     func getStationsList() async throws -> String {
         print("Начинаем тестирование")
-        
+
         do {
-            // Отправка запроса на сервер с указанием формата XML
-            let response = try await client.getStationsList(query: .init(apikey: apikey, format: "xml"))
-            
-            print("Ответ сервера: \(response)")
-            
-            // Попытка извлечь тело ответа
+            let response = try await client.getStationsList(query: .init(apikey: apikey, format: "json"))
             let body = try response.ok.body
-            
-            // Используем потоковое чтение для больших данных
-            var resultString = ""
-            
-            // Прочитаем данные из тела
-            if case .html(let bodyHTML) = body {
-                // Поток данных
-                let bodyStream = bodyHTML
-                
-                // Чтение данных по частям
-                do {
-                    for try await chunk in bodyStream {  // Здесь добавляем try перед for-await, так как это может выбросить ошибку
-                        // Преобразуем ArraySlice<UInt8> в Data
-                        let chunkData = Data(chunk)
-                        
-                        // Попробуем преобразовать данные в строку в разных кодировках
-                        if let chunkString = String(data: chunkData, encoding: .utf8) {
-                            resultString += chunkString
-                        } else if let chunkString = String(data: chunkData, encoding: .isoLatin1) {
-                            resultString += chunkString
-                        } else if let chunkString = String(data: chunkData, encoding: .utf16) {
-                            resultString += chunkString
-                        } else {
-                            throw NSError(domain: "Invalid response", code: 1002, userInfo: [NSLocalizedDescriptionKey: "Не удалось преобразовать данные в строку"])
-                        }
-                    }
-                } catch {
-                    // Обработка ошибки при чтении данных
-                    print("Ошибка при чтении потока данных: \(error)")
-                    throw error
+
+            if case .html(let bodyStream) = body {
+                // Собираем весь поток данных в единый объект Data
+                let fullData = try await bodyStream.reduce(into: Data()) { $0.append(contentsOf: $1) }
+
+                // Преобразуем Data в строку UTF-8
+                if let resultString = String(data: fullData, encoding: .utf8) {
+                    return resultString
+                } else {
+                    throw NSError(domain: "Invalid response", code: 1004, userInfo: [NSLocalizedDescriptionKey: "Не удалось преобразовать результат в строку UTF-8"])
                 }
-                
-                // Возвращаем всю строку после обработки всех частей
-                print("Тело ответа (XML): \(resultString)")
-                return resultString
             } else {
-                throw NSError(domain: "Invalid response", code: 1003, userInfo: [NSLocalizedDescriptionKey: "Ответ не содержит данные в формате XML"])
+                throw NSError(domain: "Invalid response", code: 1003, userInfo: [NSLocalizedDescriptionKey: "Ответ не содержит данные в формате HTML"])
             }
         } catch {
-            // Обработка ошибки запроса или других проблем
-            print("Произошла ошибка: \(error)")
             throw error
         }
     }
-    
+
     func getSchedules(station: String) async throws -> Schedules {
         print("Начинаем тестирование")
         do {

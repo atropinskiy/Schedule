@@ -9,27 +9,11 @@ import OpenAPIRuntime
 import OpenAPIURLSession
 
 struct ContentView: View {
-    
     @ObservedObject var viewModel: ScheduleViewModel
     @State private var stations: [Components.Schemas.Station] = []
     @State private var copyRight: Components.Schemas.Copyright?
-    
-    private let client: Client
-    private let service: NetworkServiceProtocol
-    
     init(viewModel: ScheduleViewModel) {
-        do {
-            let url = try Servers.Server1.url()
-            client = Client(serverURL: url, transport: URLSessionTransport())
-            
-            let configuration = URLSessionConfiguration.default
-            configuration.timeoutIntervalForRequest = 0
-            configuration.timeoutIntervalForResource = 0
-            self.viewModel = viewModel
-            self.service = NetworkService(client: client, apikey: Constants.token)
-        } catch {
-            fatalError("Не удалось получить URL для сервера: \(error.localizedDescription)")
-        }
+        self.viewModel = viewModel
     }
     
     var body: some View {
@@ -119,8 +103,10 @@ struct DestinationsStack: View {
                             Text(fromText)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .frame(height: 48)
-                                .foregroundColor(.gray)
+                                .foregroundColor(city != nil && station != nil ? .black : .gray)
                                 .font(.system(size: 17, weight: .medium))
+                                .lineLimit(1)
+                                .truncationMode(.tail)
                         }
                         NavigationLink(value: "to") {
                             let cityTo = viewModel.selectedCityTo?.name
@@ -129,8 +115,10 @@ struct DestinationsStack: View {
                             Text(fromTextTo)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .frame(height: 48)
-                                .foregroundColor(.gray)
+                                .foregroundColor(cityTo != nil && stationTo != nil ? .black : .gray)
                                 .font(.system(size: 17, weight: .medium))
+                                .lineLimit(1)
+                                .truncationMode(.tail)
                         }
                     }
                     .navigationDestination(for: String.self) { value in
@@ -190,6 +178,7 @@ struct DestinationsStack: View {
                         .cornerRadius(16)
                 }
             }
+
         }
     }
 }

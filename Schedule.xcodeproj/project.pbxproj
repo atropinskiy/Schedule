@@ -11,6 +11,9 @@
 		22404F5C2D43923A0075ADD6 /* DestinationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22404F5B2D43923A0075ADD6 /* DestinationModel.swift */; };
 		22404F602D4396F20075ADD6 /* RowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22404F5F2D4396F20075ADD6 /* RowView.swift */; };
 		22404F6C2D43C0020075ADD6 /* StationSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22404F6B2D43C0020075ADD6 /* StationSelectionView.swift */; };
+		22732EB92D673C0800DA464E /* DestinationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22732EB82D673C0800DA464E /* DestinationViewModel.swift */; };
+		22732EBF2D674E9D00DA464E /* DestinationsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22732EBE2D674E9D00DA464E /* DestinationsModels.swift */; };
+		22732EC22D675F9600DA464E /* CarrierViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22732EC12D675F9500DA464E /* CarrierViewModel.swift */; };
 		228E3F582D436AD400D0C92A /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228E3F572D436AD400D0C92A /* ScheduleViewModel.swift */; };
 		228E3F5C2D436B4600D0C92A /* ServiceFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228E3F5B2D436B4600D0C92A /* ServiceFunctions.swift */; };
 		228E3F652D437AC500D0C92A /* CitySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228E3F642D437AC500D0C92A /* CitySelectionView.swift */; };
@@ -47,6 +50,9 @@
 		22404F5B2D43923A0075ADD6 /* DestinationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationModel.swift; sourceTree = "<group>"; };
 		22404F5F2D4396F20075ADD6 /* RowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowView.swift; sourceTree = "<group>"; };
 		22404F6B2D43C0020075ADD6 /* StationSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationSelectionView.swift; sourceTree = "<group>"; };
+		22732EB82D673C0800DA464E /* DestinationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationViewModel.swift; sourceTree = "<group>"; };
+		22732EBE2D674E9D00DA464E /* DestinationsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationsModels.swift; sourceTree = "<group>"; };
+		22732EC12D675F9500DA464E /* CarrierViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarrierViewModel.swift; sourceTree = "<group>"; };
 		228E3F572D436AD400D0C92A /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
 		228E3F5B2D436B4600D0C92A /* ServiceFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFunctions.swift; sourceTree = "<group>"; };
 		228E3F642D437AC500D0C92A /* CitySelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySelectionView.swift; sourceTree = "<group>"; };
@@ -94,12 +100,22 @@
 		22404F542D438E0B0075ADD6 /* SelectDestination */ = {
 			isa = PBXGroup;
 			children = (
+				22732EBB2D673C8400DA464E /* Models */,
 				228E3F642D437AC500D0C92A /* CitySelectionView.swift */,
 				22404F6B2D43C0020075ADD6 /* StationSelectionView.swift */,
+				22732EB82D673C0800DA464E /* DestinationViewModel.swift */,
 				22404F5F2D4396F20075ADD6 /* RowView.swift */,
 				22404F582D438E720075ADD6 /* SearchBar.swift */,
 			);
 			path = SelectDestination;
+			sourceTree = "<group>";
+		};
+		22732EBB2D673C8400DA464E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				22732EBE2D674E9D00DA464E /* DestinationsModels.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		228E3F532D436A2D00D0C92A /* View */ = {
@@ -176,7 +192,6 @@
 				228E3F532D436A2D00D0C92A /* View */,
 				22C086A02D2030EE001B7E1E /* openapi.yaml */,
 				22D6943F2D1F156900691B46 /* openapi-generator-config.yaml */,
-				22D694112D1ECFA200691B46 /* Main */,
 				22D693FD2D1ECBED00691B46 /* AppDelegate.swift */,
 				22D694422D1F15D900691B46 /* NetworkService.swift */,
 				22D693FF2D1ECBED00691B46 /* SceneDelegate.swift */,
@@ -187,13 +202,6 @@
 				22D6940B2D1ECBEF00691B46 /* Info.plist */,
 			);
 			path = Schedule;
-			sourceTree = "<group>";
-		};
-		22D694112D1ECFA200691B46 /* Main */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Main;
 			sourceTree = "<group>";
 		};
 		22D6942D2D1F0DA500691B46 /* Frameworks */ = {
@@ -208,6 +216,7 @@
 			children = (
 				22E40FE02D44FAC200D97D8F /* Filter */,
 				22E40FD42D44D70F00D97D8F /* CarrierView.swift */,
+				22732EC12D675F9500DA464E /* CarrierViewModel.swift */,
 				22E40FEC2D451E6700D97D8F /* CarrierDetailsView.swift */,
 				22E40FF52D4620C100D97D8F /* CarrierDetailsRow.swift */,
 				22E40FD72D44DB6500D97D8F /* CarrierCard.swift */,
@@ -320,12 +329,14 @@
 				22404F592D438E720075ADD6 /* SearchBar.swift in Sources */,
 				22E40FDE2D44F46200D97D8F /* FilterHeader.swift in Sources */,
 				22BC897E2D47FA3B004FD6A2 /* ErrorView.swift in Sources */,
+				22732EC22D675F9600DA464E /* CarrierViewModel.swift in Sources */,
 				22E40FE62D44FAEF00D97D8F /* CheckBox.swift in Sources */,
 				22404F602D4396F20075ADD6 /* RowView.swift in Sources */,
 				22D694022D1ECBED00691B46 /* ContentView.swift in Sources */,
 				22BC89772D47D294004FD6A2 /* StoryViewFullScreen.swift in Sources */,
 				22E40FDB2D44F38200D97D8F /* FilterView.swift in Sources */,
 				228E3F5C2D436B4600D0C92A /* ServiceFunctions.swift in Sources */,
+				22732EB92D673C0800DA464E /* DestinationViewModel.swift in Sources */,
 				22D693FE2D1ECBED00691B46 /* AppDelegate.swift in Sources */,
 				22D694002D1ECBED00691B46 /* SceneDelegate.swift in Sources */,
 				22E40FF62D4620C100D97D8F /* CarrierDetailsRow.swift in Sources */,
@@ -336,6 +347,7 @@
 				22BC89852D48020F004FD6A2 /* SettingsView.swift in Sources */,
 				22E40FED2D451E6700D97D8F /* CarrierDetailsView.swift in Sources */,
 				22BC89882D480457004FD6A2 /* AgreementView.swift in Sources */,
+				22732EBF2D674E9D00DA464E /* DestinationsModels.swift in Sources */,
 				228E3F582D436AD400D0C92A /* ScheduleViewModel.swift in Sources */,
 				22E40FD82D44DB6500D97D8F /* CarrierCard.swift in Sources */,
 				22D694152D1EEFFB00691B46 /* TabBarView.swift in Sources */,

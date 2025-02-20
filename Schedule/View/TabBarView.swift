@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TabBarView: View {
     @StateObject private var viewModel = ScheduleViewModel()
+    @StateObject private var destinationViewModel = DestinationViewModel()
     @State private var selectedTabIndex = 0
     @Environment(\.colorScheme) private var colorScheme
 
@@ -54,6 +55,12 @@ struct TabBarView: View {
             }
         }
         .accentColor(Color("AT-black-DN"))
+        .onAppear {
+            Task {
+                await destinationViewModel.getStationList()
+            }
+        }
+        .environmentObject(destinationViewModel)
     }
     
     private func iconColor(for tabIndex: Int) -> Color {
