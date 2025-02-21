@@ -273,7 +273,6 @@ paths:
           schema:
             type: string
             format: date
-          required: false
       responses:
         "200":
           description: Успешный ответ с данными о расписаниях
