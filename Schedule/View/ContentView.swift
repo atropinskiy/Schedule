@@ -178,7 +178,6 @@ struct DestinationsStack: View {
                         .cornerRadius(16)
                 }
             }
-
         }
     }
 }
