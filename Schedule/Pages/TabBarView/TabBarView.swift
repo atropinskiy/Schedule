@@ -9,13 +9,13 @@ import SwiftUI
 
 struct TabBarView: View {
     @StateObject private var viewModel = ScheduleViewModel()
-    @StateObject private var destinationViewModel = DestinationViewModel()
+    @EnvironmentObject var destinationViewModel: DestinationViewModel
     @State private var selectedTabIndex = 0
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         TabView(selection: $selectedTabIndex) {
-            if let errorType =  viewModel.showError {
+            if let errorType = viewModel.showError {
                 ErrorView(errorType: errorType)
                     .tabItem {
                         Image("scheduleTab")
@@ -34,33 +34,17 @@ struct TabBarView: View {
                     }
                     .tag(0)
             }
-            if let errorType =  viewModel.showError {
-                ErrorView(errorType: errorType)
-                    .tabItem {
-                        Image("scheduleTab")
-                            .renderingMode(.template)
-                            .foregroundColor(iconColor(for: 0))
-                        Text("Schedule")
-                    }
-                    .tag(0)
-            } else {
-                SettingsView(viewModel: viewModel)
-                    .tabItem {
-                        Image("settingsTab")
-                            .renderingMode(.template)
-                            .foregroundColor(iconColor(for: 1))
-                        Text("Settings")
-                    }
-                    .tag(1)
-            }
+
+            SettingsView()
+                .tabItem {
+                    Image("settingsTab")
+                        .renderingMode(.template)
+                        .foregroundColor(iconColor(for: 1))
+                    Text("Settings")
+                }
+                .tag(1)
         }
         .accentColor(Color("AT-black-DN"))
-        .onAppear {
-            Task {
-                await destinationViewModel.getStationList()
-            }
-        }
-        .environmentObject(destinationViewModel)
     }
     
     private func iconColor(for tabIndex: Int) -> Color {

@@ -17,14 +17,34 @@ struct CarrierCard: View {
             VStack (spacing: 4) {
                 ZStack {
                     HStack (spacing: 8) {
-                        Image(cardCarrier.iconName)
+                        if !cardCarrier.iconName.isEmpty, let url = URL(string: cardCarrier.iconName) {
+                            AsyncImage(url: url) { phase in
+                                switch phase {
+                                case .empty:
+                                    ProgressView() // Индикатор загрузки
+                                        .frame(width: 40, height: 40)
+                                case .success(let image):
+                                    image.resizable()
+                                        .scaledToFit()
+                                        .frame(width: 40, height: 40) // Размер изображения
+                                case .failure:
+                                    EmptyView()
+                                @unknown default:
+                                    EmptyView()
+                                }
+                            }
+                        } else {
+                            EmptyView()
+                        }
+
+                        
                         VStack {
                             Text(cardCarrier.name)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .font(.system(size: 17, weight: .regular))
                                 .foregroundColor(.black)
-                            if cardCarrier.transfer != "" {
-                                Text(cardCarrier.transfer ?? "")
+                            if let hasTransfers = cardCarrier.hasTransfers, !hasTransfers.isEmpty {
+                                Text(hasTransfers)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .foregroundColor(.red)
                                     .font(.system(size: 12, weight: .regular))
@@ -44,15 +64,15 @@ struct CarrierCard: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 HStack {
-                    Text(cardCarrier.timeStart)
+                    Text(cardCarrier.timeStart.dropLast(3))
                         .font(.system(size: 17, weight: .regular))
                         .foregroundColor(.black)
                     Image("Separator")
-                    Text("20 Часов")
+                    Text("\(Int(cardCarrier.duration/60/60)) Часов")
                         .font(.system(size: 12, weight: .regular))
                         .foregroundColor(.black)
                     Image("Separator")
-                    Text(cardCarrier.timeFinish)
+                    Text(cardCarrier.timeFinish.dropLast(3))
                         .font(.system(size: 17, weight: .regular))
                         .foregroundColor(.black)
                 }
@@ -72,5 +92,5 @@ struct CarrierCard: View {
 }
 
 #Preview {
-    CarrierCard(cardCarrier: CarrierModel(name: "РЖД", transfer: "С пересадкой в Костроме", timeStart: "22:30", timeFinish: "08:15", iconName: "RZD", date: "14 января"))
+    CarrierCard(cardCarrier: CarrierModel(name: "РЖД", transfer: "С пересадкой в Костроме", timeStart: "22:30", timeFinish: "08:15", duration: 15.02, iconName: "RZD", date: "14 января", carrierCode: 146))
 }

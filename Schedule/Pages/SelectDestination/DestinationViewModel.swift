@@ -8,47 +8,53 @@
 import SwiftUI
 import Combine
 
-
+@MainActor
 class DestinationViewModel: ObservableObject {
     @Published var destinations: ResponseDestination?
     @Published var errorMessage: String?
     @Published var cities: [Destinations]?
     @Published var stations: [Destinations] = []
+    @Published var isLoading = false
     private var networkService = NetworkService()
     private var cancellables = Set<AnyCancellable>()
+
     
-   
+    
     func getStationList() async {
-        print("Тестируем station list")
+        isLoading = true
         let decoder = JSONDecoder()
         
         do {
-            let result = try await networkService.getStationsList()
+            // Получаем данные с сервера через networkService
+            let result = try await networkService.getStationsList()  // Предположим, что это возвращает Data или строку в формате JSON
+            
+            // Если получен результат в виде строки, нужно привести его к Data
             guard let jsonData = result.data(using: .utf8) else {
                 print("Ошибка: JSON не может быть преобразован в Data")
-                DispatchQueue.main.async {
-                    self.errorMessage = "Ошибка: данные не могут быть преобразованы"
-                }
+                errorMessage = "Ошибка: данные не могут быть преобразованы"
+                isLoading = false
                 return
             }
             
+            // Декодируем данные в объект ResponseDestination
             let response = try decoder.decode(ResponseDestination.self, from: jsonData)
-            print("Успешно декодировано:")
-
-            DispatchQueue.main.async {
-                self.destinations = response
-                self.cities = self.extractCities(response)
-                    .filter { !$0.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
-                    .sorted { $0.name.localizedCompare($1.name) == .orderedAscending }
-            }
-        } catch let decodingError {
-            print("Ошибка:", decodingError)
-            DispatchQueue.main.async {
-                self.errorMessage = "Ошибка: \(decodingError.localizedDescription)"
-            }
+            
+            // Присваиваем полученные данные переменным destinations и cities
+            destinations = response
+            cities = extractCities(response)
+                .filter { !$0.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+                .sorted { $0.name.localizedCompare($1.name) == .orderedAscending }
+            
+            print("✅ getStationList() выполнен успешно")  // Лог успешного выполнения
+        } catch {
+            print("❌ Ошибка при загрузке станций:", error)
+            errorMessage = "Ошибка: \(error.localizedDescription)"
         }
+        
+        isLoading = false
     }
 
+    
     
     private func extractCities(_ destination: ResponseDestination) -> [Destinations] {
         var cities: [Destinations] = []
@@ -71,7 +77,7 @@ class DestinationViewModel: ObservableObject {
             for region in country.regions {
                 for settlementData in region.settlements {
                     if settlementData.title == settlement {
-                        stationsList.append(contentsOf: settlementData.stations.map { Destinations(name: $0.title) })
+                        stationsList.append(contentsOf: settlementData.stations.map { Destinations(name: $0.title, stationId: $0.codes.yandex_code) })
                     }
                 }
             }
@@ -83,5 +89,5 @@ class DestinationViewModel: ObservableObject {
             self.stations = uniqueStations
         }
     }
-
+    
 }

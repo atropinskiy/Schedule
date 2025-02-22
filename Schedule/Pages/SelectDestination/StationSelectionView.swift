@@ -36,7 +36,6 @@ struct StationSelectionView: View {
                 .padding(.bottom, 16)
             ZStack {
                 if filteredStations.isEmpty {
-                    // Заглушка, если городов нет
                     VStack {
                         Text("Вариантов нет")
                             .font(.system(size: 25, weight: .bold))

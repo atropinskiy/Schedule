@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct FilterView: View {
-    @ObservedObject private var viewModel: ScheduleViewModel
+    @ObservedObject private var viewModel: CarrierViewModel
     @State private var isOn = false
     @Environment(\.dismiss) private var dismiss
-    init(viewModel: ScheduleViewModel) {
+    init(viewModel: CarrierViewModel) {
         self.viewModel = viewModel
     }
     var body: some View {
@@ -66,7 +66,7 @@ struct FilterView: View {
 
 struct FilterView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = ScheduleViewModel()
+        let viewModel = CarrierViewModel()
         return FilterView(viewModel: viewModel)
     }
 }

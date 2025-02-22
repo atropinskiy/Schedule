@@ -12,9 +12,11 @@ struct AgreementView: View {
     @Environment(\.dismiss) private var dismiss
     
     init() {
-        UINavigationBar.appearance().backgroundColor = UIColor(named: "AT-bg-DN")
-        UINavigationBar.appearance().shadowImage = UIImage()
-        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+        Task { @MainActor in
+            UINavigationBar.appearance().backgroundColor = UIColor(named: "AT-bg-DN")
+            UINavigationBar.appearance().shadowImage = UIImage()
+            UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+        }
     }
     
     var body: some View {

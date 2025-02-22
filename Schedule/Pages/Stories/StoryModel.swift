@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 struct Story: Identifiable, Hashable {
     var id = UUID()
     var name: String
@@ -18,13 +16,5 @@ struct Story: Identifiable, Hashable {
     var text2: String
 }
 
-struct CarrierModel: Identifiable, Hashable {
-    var id = UUID()
-    var name: String
-    var transfer: String?
-    var timeStart: String
-    var timeFinish: String
-    var iconName: String
-    var date: String
-}
+
 

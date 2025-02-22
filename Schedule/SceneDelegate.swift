@@ -10,6 +10,7 @@ import SwiftUI
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    let destinationViewModel = DestinationViewModel()
 
     func scene(
         _ scene: UIScene,
@@ -18,12 +19,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-        let contentView = TabBarView() // Твой SwiftUI-контент
+        let contentView = TabBarView()
+            .environmentObject(destinationViewModel)
 
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = UIHostingController(rootView: contentView)
         self.window = window
         window.makeKeyAndVisible()
+        Task {
+            await destinationViewModel.getStationList()
+        }
     }
 }
 

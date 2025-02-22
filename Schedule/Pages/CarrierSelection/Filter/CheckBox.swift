@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct CheckBox: View {
-    @ObservedObject private var viewModel: ScheduleViewModel
+    @ObservedObject private var viewModel: CarrierViewModel
     @State private var isChecked: Bool
     private var text: String
-    init(viewModel: ScheduleViewModel, text: String) {
+    init(viewModel: CarrierViewModel, text: String) {
         self.viewModel = viewModel
         self.text = text
         _isChecked = State(initialValue: viewModel.timeSelections.contains(text))
@@ -49,7 +49,7 @@ struct CheckBox: View {
 
 struct CheckBox_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = ScheduleViewModel()
+        let viewModel = CarrierViewModel()
         return CheckBox(viewModel: viewModel, text: "Утро 06:00 - 12:00")
     }
 }

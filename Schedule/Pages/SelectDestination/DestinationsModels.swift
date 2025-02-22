@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Destinations: Identifiable, Hashable {
+struct Destinations: Identifiable, Hashable, Sendable {
     var id = UUID()
     var name: String
     var stationId: String?
