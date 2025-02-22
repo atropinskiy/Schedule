@@ -8,7 +8,7 @@
 import SwiftUI
 
 @MainActor
-class CarrierViewModel: ObservableObject {
+final class CarrierViewModel: ObservableObject {
     @Published var carrierList: [CarrierModel] = []
     @Published var isLoading: Bool = false
     @Published var timeSelections: [String]

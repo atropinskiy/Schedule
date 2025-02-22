@@ -8,7 +8,7 @@
 import SwiftUI
 
 @MainActor
-class ScheduleViewModel: ObservableObject {
+final class ScheduleViewModel: ObservableObject {
     @Published var path = NavigationPath()
     @Published var selectedStationFrom: Destinations?
     @Published var selectedStationTo: Destinations?

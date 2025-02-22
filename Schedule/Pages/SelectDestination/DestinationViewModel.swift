@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 @MainActor
-class DestinationViewModel: ObservableObject {
+final class DestinationViewModel: ObservableObject {
     @Published var destinations: ResponseDestination?
     @Published var errorMessage: String?
     @Published var cities: [Destinations]?
@@ -17,13 +17,15 @@ class DestinationViewModel: ObservableObject {
     @Published var isLoading = false
     private var networkService = NetworkService()
     private var cancellables = Set<AnyCancellable>()
+    private var decoder: JSONDecoder
 
-    
+    init() {
+        let decoder = JSONDecoder()
+        self.decoder = decoder
+    }
     
     func getStationList() async {
         isLoading = true
-        let decoder = JSONDecoder()
-        
         do {
             // Получаем данные с сервера через networkService
             let result = try await networkService.getStationsList()  // Предположим, что это возвращает Data или строку в формате JSON

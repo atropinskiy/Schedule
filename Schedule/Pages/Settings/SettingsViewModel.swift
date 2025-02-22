@@ -8,7 +8,7 @@
 import SwiftUI
 
 @MainActor
-class SettingsViewModel: ObservableObject {
+final class SettingsViewModel: ObservableObject {
     @Published var isDarkMode: Bool = false {
         didSet {
             updateUserInterfaceStyle()

@@ -42,6 +42,14 @@ struct CarrierModel: Identifiable, Hashable, Sendable {
         
         return date
     }
+    
+    func trimmedTimeStart() -> String {
+        return String(timeStart.dropLast(3))
+    }
+    
+    func trimmedTimeFinish() -> String {
+        return String(timeFinish.dropLast(3))
+    }
 }
 
 

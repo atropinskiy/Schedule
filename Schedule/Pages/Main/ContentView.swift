@@ -170,7 +170,7 @@ struct DestinationsStack: View {
             
             
             
-            if viewModel.selectedStationTo != nil && viewModel.selectedStationFrom != nil {
+//            if viewModel.selectedStationTo != nil && viewModel.selectedStationFrom != nil {
                 NavigationLink(destination: CarrierView(
                     destinationFrom: finalFrom,
                     destinationTo: finalTo,
@@ -187,7 +187,7 @@ struct DestinationsStack: View {
                         .background(Color.blue)
                         .cornerRadius(16)
                 }
-            }
+//            }
         }
     }
 }

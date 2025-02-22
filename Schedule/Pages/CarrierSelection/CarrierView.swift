@@ -16,7 +16,7 @@ struct CarrierView: View {
     private var destinationTo: String
     private var stationFrom: Destinations
     private var stationTo: Destinations
-    
+
     init(
         destinationFrom: String,
         destinationTo: String,
@@ -28,122 +28,144 @@ struct CarrierView: View {
         self.stationFrom = stationFrom
         self.stationTo = stationTo
     }
-    
-    
+
     private var filteredCarriers: [CarrierModel] {
         viewModel.carrierList.filter { carrier in
             let transferCondition = (viewModel.transferFlag ?? true) ? true : (carrier.transfer?.isEmpty ?? true)
-            
-            let timeCondition: Bool
-            if !viewModel.timeSelections.isEmpty {
-                let carrierInterval = viewModel.carrierInInterval(carrier: carrier)
-                print(carrierInterval)
-                timeCondition = viewModel.timeSelections.contains { selectedInterval in
-                    selectedInterval.contains(carrierInterval)
-                }
-            } else {
-                timeCondition = true
-            }
-            
+            let timeCondition = viewModel.timeSelections.isEmpty ||
+                viewModel.timeSelections.contains { $0.contains(viewModel.carrierInInterval(carrier: carrier)) }
             return transferCondition && timeCondition
         }
     }
-    
+
     var body: some View {
         ZStack {
             if viewModel.isLoading && viewModel.carrierList.isEmpty {
-                VStack {
-                    ProgressView("Загрузка...")
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .scaleEffect(1.5)
-                        .padding()
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.white.opacity(0.8)) // Полупрозрачный фон, если нужно
+                CarrierLoadingView()
             } else {
                 VStack(spacing: 16) {
-                    Text("\(destinationFrom) -> \(destinationTo)")
-                        .font(.system(size: 24, weight: .bold))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top, 16)
-
-                    if filteredCarriers.isEmpty {
-                        VStack {
-                            Text("Вариантов нет")
-                                .font(.system(size: 25, weight: .bold))
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .padding(.bottom, 60)
-                    } else {
-                        ScrollView {
-                            LazyVStack(spacing: 8) {
-                                ForEach(filteredCarriers, id: \.id) { carrier in
-                                    NavigationLink(destination: CarrierDetailsView(viewModel: viewModel, carrier: carrier.carrierCode)) {
-                                        CarrierCard(cardCarrier: carrier)
-                                    }
-                                    .onAppear {
-                                        if carrier == filteredCarriers.last {
-                                            Task {
-                                                await viewModel.getCarriers(stationFrom: stationFrom, stationTo: stationTo)
-                                            }
-                                        }
-                                    }
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                                .zIndex(0)
-
-                                if viewModel.isLoading {
-                                    ProgressView("Загрузка...")
-                                        .padding()
-                                }
-                            }
-                        }
+                    CarrierHeaderView(destinationFrom: destinationFrom, destinationTo: destinationTo)
+                    CarrierListView(filteredCarriers: filteredCarriers, viewModel: viewModel, stationFrom: stationFrom, stationTo: stationTo)
                         .padding(.horizontal, 0)
-                        .scrollIndicators(.hidden)
-                    }
+                        
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                .padding(.horizontal, 16)
+                .padding(.horizontal, 0)
+                
             }
 
-            VStack {
-                Spacer()
-                NavigationLink(destination: FilterView(viewModel: viewModel)) {
-                    Text("Уточнить время")
-                        .font(.system(size: 17, weight: .bold))
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 60)
-                        .background(Color("AT-blue"))
-                        .cornerRadius(16)
-                }
-                .zIndex(1)
-                .contentShape(Rectangle())
-            }
+            FilterButtonView()
         }
+        .padding(.bottom, 24)
+        .padding(.horizontal, 16)
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("")
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {
-                    dismiss()
-                }) {
+                Button(action: { dismiss() }) {
                     Image(systemName: "chevron.backward")
                         .foregroundColor(Color("AT-black-DN"))
                         .padding(.horizontal, 0)
                 }
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .padding(.horizontal, 0)
-        .navigationBarTitleDisplayMode(.inline)
         .toolbar(isTabBarHidden ? .hidden : .visible, for: .tabBar)
         .task {
-            await viewModel.getCarriers(stationFrom: self.stationFrom, stationTo: self.stationTo)
+            await viewModel.getCarriers(stationFrom: stationFrom, stationTo: stationTo)
         }
     }
+}
 
+// MARK: - Заголовок с направлением
+private struct CarrierHeaderView: View {
+    let destinationFrom: String
+    let destinationTo: String
+
+    var body: some View {
+        Text("\(destinationFrom) -> \(destinationTo)")
+            .font(.system(size: 24, weight: .bold))
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, 16)
+    }
+}
+
+// MARK: - Список перевозчиков
+private struct CarrierListView: View {
+    let filteredCarriers: [CarrierModel]
+    let viewModel: CarrierViewModel
+    let stationFrom: Destinations
+    let stationTo: Destinations
+
+    var body: some View {
+        if filteredCarriers.isEmpty {
+            VStack {
+                Text("Вариантов нет")
+                    .font(.system(size: 25, weight: .bold))
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.bottom, 60)
+        } else {
+            ScrollView {
+                LazyVStack(spacing: 8) {
+                    ForEach(filteredCarriers) { carrier in
+                        NavigationLink(destination: CarrierDetailsView(viewModel: viewModel, carrier: carrier.carrierCode)) {
+                            CarrierCard(cardCarrier: carrier)
+                        }
+                        .onAppear {
+                            if carrier == filteredCarriers.last {
+                                Task {
+                                    await viewModel.getCarriers(stationFrom: stationFrom, stationTo: stationTo)
+                                }
+                            }
+                        }
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    
+                    if viewModel.isLoading {
+                        ProgressView("Загрузка...")
+                            .padding()
+                    }
+                }
+            }
+            .padding(.horizontal, 0)
+            .scrollIndicators(.hidden)
+        }
+    }
+}
+
+// MARK: - Индикатор загрузки
+private struct CarrierLoadingView: View {
+    var body: some View {
+        VStack {
+            ProgressView("Загрузка...")
+                .progressViewStyle(CircularProgressViewStyle())
+                .scaleEffect(1.5)
+                .padding()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.white.opacity(0.8)) // Полупрозрачный фон
+    }
+}
+
+// MARK: - Кнопка "Уточнить время"
+private struct FilterButtonView: View {
+    var body: some View {
+        VStack {
+            Spacer()
+            NavigationLink(destination: FilterView(viewModel: CarrierViewModel())) {
+                Text("Уточнить время")
+                    .font(.system(size: 17, weight: .bold))
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 60)
+                    .background(Color("AT-blue"))
+                    .cornerRadius(16)
+            }
+            .zIndex(1)
+            .contentShape(Rectangle())
+        }
+    }
 }
 
 struct CarrierView_Previews: PreviewProvider {
