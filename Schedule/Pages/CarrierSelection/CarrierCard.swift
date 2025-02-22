@@ -53,7 +53,7 @@ struct CarrierCard: View {
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         VStack{
-                            Text(cardCarrier.date)
+                            Text(cardCarrier.formattedDate())
                                 .font(.system(size: 12, weight: .regular))
                                 .foregroundColor(.black)
                         }

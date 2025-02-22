@@ -29,6 +29,19 @@ struct CarrierModel: Identifiable, Hashable, Sendable {
     var date: String
     var carrierCode: Int
     var hasTransfers: String?
+    
+    func formattedDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd" // Исходный формат даты
+        dateFormatter.locale = Locale(identifier: "ru_RU") // Русская локаль
+        
+        if let dateObject = dateFormatter.date(from: date) {
+            dateFormatter.dateFormat = "d MMMM" // Желаемый формат (например, "14 января")
+            return dateFormatter.string(from: dateObject)
+        }
+        
+        return date
+    }
 }
 
 
