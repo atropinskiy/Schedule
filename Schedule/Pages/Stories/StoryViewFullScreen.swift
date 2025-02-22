@@ -99,8 +99,6 @@ struct StoryViewFullScreen: View {
             viewModel.timer?.invalidate()
         }
     }
-
-
 }
 
 struct StoryViewFullScreen_Previews: PreviewProvider {

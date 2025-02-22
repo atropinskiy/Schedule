@@ -49,7 +49,6 @@ struct SearchBar: View {
             .background(Color("AT-searchBarBg-DN"))
             .cornerRadius(10)
             .onTapGesture {
-                // Снимаем фокус, если пользователь кликает вне поля ввода
                 if isEditing {
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     isEditing = false

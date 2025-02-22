@@ -8,7 +8,6 @@ import SwiftUI
 
 @MainActor
 class StoryViewModel: ObservableObject {
-    
     @Published var selectedStoryIndex: Int?
     @Published var showingStories: Bool = false
     @Published var currentStoryIndex: Int

@@ -37,7 +37,6 @@ struct CarrierCard: View {
                             EmptyView()
                         }
 
-                        
                         VStack {
                             Text(cardCarrier.name)
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -87,8 +86,6 @@ struct CarrierCard: View {
             .zIndex(2)
             .contentShape(Rectangle())
     }
-    
-    
 }
 
 #Preview {
