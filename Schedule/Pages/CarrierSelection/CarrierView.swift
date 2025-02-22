@@ -135,7 +135,7 @@ private struct CarrierListView: View {
 }
 
 // MARK: - Индикатор загрузки
-private struct CarrierLoadingView: View {
+struct CarrierLoadingView: View {
     var body: some View {
         VStack {
             ProgressView("Загрузка...")
