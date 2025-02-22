@@ -8,15 +8,12 @@
 import SwiftUI
 
 struct StoryViewFullScreen: View {
-    @ObservedObject private var viewModel: ScheduleViewModel
+    @ObservedObject private var viewModel: StoryViewModel
     @Environment(\.presentationMode) private var presentationMode
-    @State private var timer: Timer?
-    @State private var currentStoryIndex: Int
-    @State private var progress: Double = 0
-    @State private var dragOffset: CGFloat = 0
+    private var currentStoryIndex: Int
     @Namespace private var animationNamespace
 
-    init(viewModel: ScheduleViewModel, storyIndex: Int) {
+    init(viewModel: StoryViewModel, storyIndex: Int) {
         self.viewModel = viewModel
         self.currentStoryIndex = storyIndex
     }
@@ -26,28 +23,28 @@ struct StoryViewFullScreen: View {
             Image(viewModel.story[currentStoryIndex].imgName)
                 .resizable()
                 .cornerRadius(40)
-                .offset(x: dragOffset)
+                .offset(x: viewModel.dragOffset)
                 .clipShape(RoundedRectangle(cornerRadius: 40))
                 .gesture(
                     DragGesture()
                         .onChanged { value in
-                            dragOffset = value.translation.width
+                            viewModel.dragOffset = value.translation.width
                         }
                         .onEnded { value in
                             if value.translation.width < -50 {
-                                nextStory()
+                                viewModel.nextStory()
                             } else if value.translation.width > 50 {
-                                previousStory()
+                                viewModel.previousStory()
                             }
-                            dragOffset = 0
+                            viewModel.dragOffset = 0
                         }
                 )
                 .onTapGesture {
                     withAnimation {
-                        dragOffset = -UIScreen.main.bounds.width
+                        viewModel.dragOffset = -UIScreen.main.bounds.width
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        nextStory()
+                        viewModel.nextStory()
                     }
                 }
                 .contentShape(RoundedRectangle(cornerRadius: 40))
@@ -55,7 +52,7 @@ struct StoryViewFullScreen: View {
             VStack(spacing: 0) {
                 HStack(spacing: 6) {
                     ForEach(Array(viewModel.story.enumerated()), id: \.offset) { index, _ in
-                        ProgressView(value: index == currentStoryIndex ? progress : (index < currentStoryIndex ? 100 : 0), total: 100)
+                        ProgressView(value: index == currentStoryIndex ? viewModel.progress : (index < currentStoryIndex ? 100 : 0), total: 100)
                             .progressViewStyle(LinearProgressViewStyle())
                             .background(Color.white)
                             .frame(height: 6)
@@ -96,73 +93,17 @@ struct StoryViewFullScreen: View {
         }
         .background(.black)
         .onAppear {
-            startTimer()
+            viewModel.startTimer()
         }
         .onDisappear {
-            timer?.invalidate()
+            viewModel.timer?.invalidate()
         }
-    }
-
-    private func startTimer() {
-        progress = 0
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
-            if progress < 100 {
-                progress += 2
-            } else {
-                nextStory()
-            }
-        }
-    }
-
-    private func nextStory() {
-        guard currentStoryIndex + 1 < viewModel.story.count else {
-            timer?.invalidate()
-            return
-        }
-
-        timer?.invalidate()
-        withAnimation {
-            dragOffset = -UIScreen.main.bounds.width
-        }
-
-        currentStoryIndex += 1
-        viewModel.setStoryShown(id: currentStoryIndex)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            dragOffset = 0
-        }
-
-        startTimer()
-    }
-
-    private func previousStory() {
-        guard currentStoryIndex > 0 else { return }
-
-        timer?.invalidate()
-        withAnimation {
-            dragOffset = UIScreen.main.bounds.width
-        }
-
-        currentStoryIndex -= 1
-        viewModel.setStoryShown(id: currentStoryIndex)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            dragOffset = 0
-        }
-
-        startTimer()
     }
 }
 
 struct StoryViewFullScreen_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = ScheduleViewModel()
+        let viewModel = StoryViewModel(currentStoryIndex: 1)
         return StoryViewFullScreen(viewModel: viewModel, storyIndex: 0)
     }
 }
-
-
-
-
-
-
-

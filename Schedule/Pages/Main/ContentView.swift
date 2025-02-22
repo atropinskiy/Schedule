@@ -9,27 +9,13 @@ import OpenAPIRuntime
 import OpenAPIURLSession
 
 struct ContentView: View {
-    
     @ObservedObject var viewModel: ScheduleViewModel
+    @StateObject var storyViewModel: StoryViewModel
     @State private var stations: [Components.Schemas.Station] = []
     @State private var copyRight: Components.Schemas.Copyright?
-    
-    private let client: Client
-    private let service: NetworkServiceProtocol
-    
     init(viewModel: ScheduleViewModel) {
-        do {
-            let url = try Servers.Server1.url()
-            client = Client(serverURL: url, transport: URLSessionTransport())
-            
-            let configuration = URLSessionConfiguration.default
-            configuration.timeoutIntervalForRequest = 0
-            configuration.timeoutIntervalForResource = 0
-            self.viewModel = viewModel
-            self.service = NetworkService(client: client, apikey: Constants.token)
-        } catch {
-            fatalError("Не удалось получить URL для сервера: \(error.localizedDescription)")
-        }
+        self.viewModel = viewModel
+        _storyViewModel = StateObject(wrappedValue: StoryViewModel(currentStoryIndex: 0))
     }
     
     var body: some View {
@@ -38,10 +24,9 @@ struct ContentView: View {
             VStack(spacing: 12) {
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack(spacing: 12) {
-                        ForEach(viewModel.story.indices, id: \.self) { index in
-                            let story = viewModel.story[index]
+                        ForEach(Array(storyViewModel.story.enumerated()), id: \.element.id) { index, story in
                             ZStack {
-                                if story.shown == false {
+                                if !story.shown {
                                     Image(story.imgName)
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
@@ -51,8 +36,8 @@ struct ContentView: View {
                                         .clipShape(RoundedRectangle(cornerRadius: 16))
                                         .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(Color.blue, lineWidth: 4))
                                         .onTapGesture {
-                                            viewModel.setStoryShown(id: index)
-                                            viewModel.selectStory(at: index)
+                                            storyViewModel.setStoryShown(id: index) // ✅ Передаём ID истории
+                                            storyViewModel.selectStory(at: index) // ✅ Передаём индекс
                                         }
                                 } else {
                                     Image(story.imgName)
@@ -62,7 +47,7 @@ struct ContentView: View {
                                         .clipShape(RoundedRectangle(cornerRadius: 16))
                                         .opacity(0.5)
                                         .onTapGesture {
-                                            viewModel.selectStory(at: index)
+                                            storyViewModel.selectStory(at: index)
                                         }
                                     
                                 }
@@ -84,11 +69,11 @@ struct ContentView: View {
                     }
                 }
                 .frame(height: 140)
-                .fullScreenCover(isPresented: $viewModel.showingStories, onDismiss: {
-                    viewModel.closeStory()
+                .fullScreenCover(isPresented: $storyViewModel.showingStories, onDismiss: {
+                    storyViewModel.closeStory()
                 }) {
-                    if let selectedStoryIndex = viewModel.selectedStoryIndex {
-                        StoryViewFullScreen(viewModel: viewModel, storyIndex: selectedStoryIndex)
+                    if let selectedStoryIndex = storyViewModel.selectedStoryIndex {
+                        StoryViewFullScreen(viewModel: storyViewModel, storyIndex: selectedStoryIndex)
                     } else {
                         Text("No story selected")
                     }
@@ -119,8 +104,10 @@ struct DestinationsStack: View {
                             Text(fromText)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .frame(height: 48)
-                                .foregroundColor(.gray)
+                                .foregroundColor(city != nil && station != nil ? .black : .gray)
                                 .font(.system(size: 17, weight: .medium))
+                                .lineLimit(1)
+                                .truncationMode(.tail)
                         }
                         NavigationLink(value: "to") {
                             let cityTo = viewModel.selectedCityTo?.name
@@ -129,8 +116,10 @@ struct DestinationsStack: View {
                             Text(fromTextTo)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .frame(height: 48)
-                                .foregroundColor(.gray)
+                                .foregroundColor(cityTo != nil && stationTo != nil ? .black : .gray)
                                 .font(.system(size: 17, weight: .medium))
+                                .lineLimit(1)
+                                .truncationMode(.tail)
                         }
                     }
                     .navigationDestination(for: String.self) { value in
@@ -179,8 +168,17 @@ struct DestinationsStack: View {
             let finalFrom = "\(viewModel.selectedCityFrom?.name ?? "Город отправления") (\(viewModel.selectedStationFrom?.name ?? "Станция отправления"))"
             let finalTo = "\(viewModel.selectedCityTo?.name ?? "Город прибытия") (\(viewModel.selectedStationTo?.name ?? "Станция прибытия"))"
             
+            
+            
             if viewModel.selectedStationTo != nil && viewModel.selectedStationFrom != nil {
-                NavigationLink(destination: CarrierView(viewModel: viewModel, destinationFrom: finalFrom, destinationTo: finalTo)) {
+                NavigationLink(destination: CarrierView(
+                    destinationFrom: finalFrom,
+                    destinationTo: finalTo,
+                    stationFrom: viewModel.selectedStationFrom ?? Destinations(name: "Ленинградский вокзал", stationId: "c146"),
+                    stationTo: viewModel.selectedStationTo ?? Destinations(name: "Ленинградский вокзал", stationId: "c213")
+                    
+                ))
+                {
                     Text("Найти")
                         .font(.system(size: 17, weight: .bold))
                         .foregroundColor(.white)

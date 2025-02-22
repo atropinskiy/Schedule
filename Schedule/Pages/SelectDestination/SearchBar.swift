@@ -10,9 +10,11 @@ struct SearchBar: View {
     var body: some View {
         HStack (spacing: 0) {
             HStack (spacing: 0) {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.gray)
                 TextField(placeholder, text: $searchText)
                     .font(.system(size: 17))
-                    .padding(.leading, 8)
+                    .padding(.leading, 2)
                     .autocorrectionDisabled(true)
                     .autocapitalization(.none)
                     .onTapGesture {
@@ -39,6 +41,7 @@ struct SearchBar: View {
                             .padding(.vertical)
                     }
                     .padding(.trailing, 8)
+                    .padding(.leading, 7)
                 }
             }
             .frame(height: 37)
@@ -46,7 +49,6 @@ struct SearchBar: View {
             .background(Color("AT-searchBarBg-DN"))
             .cornerRadius(10)
             .onTapGesture {
-                // Снимаем фокус, если пользователь кликает вне поля ввода
                 if isEditing {
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     isEditing = false

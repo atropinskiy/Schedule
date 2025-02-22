@@ -10,7 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     @State private var isDarkMode: Bool = false
     @Environment(\.colorScheme) private var colorScheme
-    @ObservedObject var viewModel = ScheduleViewModel()
+    @EnvironmentObject var viewModel: SettingsViewModel
     
     var body: some View {
         NavigationStack {

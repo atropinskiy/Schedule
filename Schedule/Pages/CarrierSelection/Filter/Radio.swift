@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct Radio: View {
-    @ObservedObject var viewModel: ScheduleViewModel
+    @ObservedObject var viewModel: CarrierViewModel
     @State private var isChecked = false
     private var flag: Bool
     private var text: String
-    init(viewModel: ScheduleViewModel, text: String, flag: Bool) {
+    init(viewModel: CarrierViewModel, text: String, flag: Bool) {
         self.viewModel = viewModel
         self.text = text
         self.flag = flag
@@ -52,7 +52,7 @@ struct Radio: View {
 
 struct Radio_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = ScheduleViewModel()
+        let viewModel = CarrierViewModel()
         return Radio(viewModel: viewModel, text: "Да", flag: true)
     }
 }
